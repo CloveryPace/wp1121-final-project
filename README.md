@@ -34,3 +34,41 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+# Run the project
+
+1. Install dependencies
+   ```bash
+   yarn
+   ```
+2. Create `.env.local` and copy `.env.example` to `.env.local`
+
+   ```text
+    POSTGRES_URL=postgres://postgres:postgres@localhost:5432/leftover
+
+    PUSHER_ID=
+    NEXT_PUBLIC_PUSHER_KEY=
+    PUSHER_SECRET=
+    NEXT_PUBLIC_PUSHER_CLUSTER=
+
+    AUTH_SECRET=
+    AUTH_GITHUB_ID=
+    AUTH_GITHUB_SECRET=
+
+
+    NEXT_PUBLIC_BASE_URL=http://localhost:3000
+   ```
+
+3. Start the database
+   ```bash
+   docker compose up -d
+   ```
+4. Run migrations
+   ```bash
+   yarn migrate
+   ```
+5. Start the development server
+   ```bash
+   yarn dev
+   ```
+6. Open http://localhost:3000 in your browser
