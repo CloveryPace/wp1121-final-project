@@ -1,22 +1,22 @@
 import { sql, relations } from "drizzle-orm";
 import {
-  index,
   pgTable,
   serial,
   uuid,
   varchar,
-  unique,
   date,
   integer,
   timestamp,
   text,
+  index,
+  unique,
 } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
   id: serial("id").primaryKey(),
   displayId: uuid("display_id").defaultRandom().notNull().unique(),
   username: varchar("username", { length: 100 }).notNull(),
-  hashedPassword: varchar("hashed_password", { length: 100 }),
+  hashedPassword: varchar("hashed_password", { length: 100 }).notNull(),
   image: text("user_image"),
 });
 
