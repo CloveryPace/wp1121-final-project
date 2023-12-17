@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 
+import { signIn } from "next-auth/react";
 import { Oswald } from "next/font/google";
 import Image from "next/image";
 
 import { Input } from "@/components/ui/input";
+import { publicEnv } from "@/lib/env/public";
 
 const oswald = Oswald({
   weight: "300",
@@ -14,6 +16,16 @@ const oswald = Oswald({
 
 export default function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const handleSubmit = () => {
+    // TODO: sign in logic
+    signIn("credentials", {
+      username,
+      password,
+      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/taste`,
+    });
+  };
   return (
     <main className="flex-rows fixed top-0 flex h-screen w-full items-center overflow-hidden">
       <div className="flex w-3/5 min-w-[650px] max-w-[1000px] flex-col border-r bg-white pb-10">
@@ -27,11 +39,19 @@ export default function Login() {
             type="username"
             placeholder="帳號"
             className="flex h-14 w-full rounded-md border border-black text-base"
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
+            value={username}
           />
           <Input
             type="password"
             placeholder="密碼"
             className="flex h-14 w-full rounded-md border border-black text-base"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+            value={password}
           />
           {isSignUp && (
             <Input
@@ -44,6 +64,7 @@ export default function Login() {
             <button
               className="focus:shadow-outline w-full rounded rounded-xl border border-black bg-theme-light-green px-4 py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
               type="button"
+              onClick={handleSubmit}
             >
               登入
             </button>

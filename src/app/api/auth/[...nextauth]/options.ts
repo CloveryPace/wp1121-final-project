@@ -6,4 +6,7 @@ export const options: NextAuthOptions = {
   providers: [CredentialProvider],
   callbacks: {},
   secret: process.env.AUTH_SECRET,
+  pages: {
+    signIn: "/",
+  },
 };
