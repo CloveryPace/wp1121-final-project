@@ -8,7 +8,7 @@ async function TastePage() {
       <div className="flex flex-col items-center justify-center">
         {/* <BiError className="text-yellow-500" size={80} /> */}
         <p className="text-lg font-semibold text-slate-700">
-          {JSON.stringify(session, null, 2)}
+          {JSON.stringify(session)}
         </p>
       </div>
     </div>

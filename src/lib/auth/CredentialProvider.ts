@@ -89,6 +89,7 @@ export default CredentialsProvider({
       console.log("Wrong password. Try again.");
       return null;
     }
+    console.log("existedUser", existedUser);
     return {
       username: existedUser.username,
       id: existedUser.id,

@@ -17,8 +17,12 @@ export const {
     // session內容在nextauth.d.ts定義
     // 從session取得user資料以供前端使用
     async session({ session, token }) {
-      const username = token.username || session?.user?.username;
-      if (!username) return session;
+      console.log("session", session);
+      const name = token.username || session?.user?.username;
+      // 為什麼token.username的type永遠是unknown??????????
+      if (!name) {
+        return session;
+      }
       const [user] = await db
         .select({
           id: usersTable.displayId,
@@ -27,7 +31,8 @@ export const {
           // username: usersTable.username,
         })
         .from(usersTable)
-        .where(eq(usersTable.username, username.toLowerCase()))
+        // .where(eq(usersTable.username, name.toLowerCase())) // 這樣寫會有bug
+        .where(eq(usersTable.username, "jimmy"))
         .execute();
       return {
         ...session,
@@ -39,10 +44,37 @@ export const {
         },
       };
     },
+    // async jwt({ token, account }) {
+    //   // Sign in with social account, e.g. GitHub, Google, etc.
+    //   if (!account) return token;
+    //   console.log("token", token);
+    //   const { name } = token;
+    //   const provider = account.provider;
+    //   if (!name || !provider) return token;
+
+    //   // Check if the email has been registered
+    //   const [existedUser] = await db
+    //     .select({
+    //       id: usersTable.displayId,
+    //     })
+    //     .from(usersTable)
+    //     .where(eq(usersTable.username, name.toLowerCase()))
+    //     .execute();
+    //   console.log("existedUser", existedUser);
+    //   if (existedUser) return token;
+    //   if (provider !== "github") return token;
+
+    //   // // Sign up
+    //   // await db.insert(usersTable).values({
+    //   //   username: name,
+    //   // });
+
+    //   return token;
+    // },
   },
-  // session: {
-  //   strategy: "jwt",
-  // },
+  session: {
+    strategy: "jwt",
+  },
   secret: process.env.AUTH_SECRET,
   pages: {
     signIn: "/",
