@@ -19,7 +19,6 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = () => {
-    // TODO: sign in logic
     signIn("credentials", {
       username,
       password,

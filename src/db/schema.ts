@@ -23,7 +23,7 @@ export const usersTable = pgTable(
     image: text("user_image"),
   },
   (table) => ({
-    displayIdIndex: index("display_id_index").on(table.displayId),
+    displayIdIndex: index("user_display_id_index").on(table.displayId),
   }),
 );
 
@@ -47,8 +47,8 @@ export const eventsTable = pgTable(
     location: varchar("location", { length: 100 }).notNull(),
   },
   (table) => ({
-    displayIdIndex: index("display_id_index").on(table.displayId),
-    userIdIndex: index("user_id_index").on(table.userId),
+    displayIdIndex: index("event_display_id_index").on(table.displayId),
+    userIdIndex: index("event_user_id_index").on(table.userId),
   }),
 );
 
@@ -66,7 +66,7 @@ export const foodTable = pgTable(
     image: text("image").notNull(),
   },
   (table) => ({
-    displayIdIndex: index("display_id_index").on(table.displayId),
+    displayIdIndex: index("food_display_id_index").on(table.displayId),
     eventIdIndex: index("event_id_index").on(table.eventId),
   }),
 );
@@ -116,7 +116,7 @@ export const reservationTable = pgTable(
   },
   (table) => ({
     // displayIdIndex: index("display_id_index").on(table.displayId),
-    userIdIndex: index("user_id_index").on(table.userId),
+    userIdIndex: index("reservation_user_id_index").on(table.userId),
     foodIdIndex: index("food_id_index").on(table.foodId),
   }),
 );
