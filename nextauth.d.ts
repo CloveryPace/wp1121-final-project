@@ -9,13 +9,13 @@ import type { User } from "@/lib/types/db";
 
 declare module "next-auth" {
   interface Session extends DefaultSession {
-    user: User; // 我們自己設定的type
+    user?: User; // 我們自己設定的type
   }
 }
 
 // declare module "next-auth/jwt" {
-//   interface JWT{
-//     user: User; // 我們自己設定的type
+//   interface JWT {
+//     user?: User; // 我們自己設定的type
 //   }
 // }
 
