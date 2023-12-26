@@ -39,10 +39,10 @@ export const eventsTable = pgTable(
         onUpdate: "cascade",
       }),
     latest_time: date("latest_time").notNull(),
-    categoryId: uuid("category_id").references(() => usersTable.displayId, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
+    // categoryId: uuid("category_id").references(() => usersTable.displayId, {
+    //   onDelete: "cascade",
+    //   onUpdate: "cascade",
+    // }),
     categoryName: varchar("category_name", { length: 100 }),
     location: varchar("location", { length: 100 }).notNull(),
   },
