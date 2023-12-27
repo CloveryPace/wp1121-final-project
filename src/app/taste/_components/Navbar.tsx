@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { Oswald } from "next/font/google";
+import Link from "next/link";
 
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 
@@ -113,7 +114,11 @@ function Navbar() {
               <DropdownMenuItem>我的餐點</DropdownMenuItem>
               <DropdownMenuItem>我的訂單</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>登出</DropdownMenuItem>
+              <Link href={`/auth/signout`}>
+                <DropdownMenuItem>
+                  登出
+                </DropdownMenuItem>
+              </Link>
             </DropdownMenuContent>
           </DropdownMenu>
 
