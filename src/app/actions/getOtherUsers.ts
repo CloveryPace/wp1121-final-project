@@ -11,16 +11,17 @@ const getUsers = async () => {
     if (!session || !session?.user?.id) {
       return null;
     }
-    const userName = session.user.username;
+    const userId = session.user.id; // 目前登入的user
 
+    // 取得所有其他user
     const users = await db
       .select({
         username: usersTable.username,
-        user_id: usersTable.displayId,
+        userId: usersTable.displayId,
         image: usersTable.image,
       })
       .from(usersTable)
-      .where(not(eq(usersTable.username, userName)))
+      .where(not(eq(usersTable.displayId, userId)))
       .execute();
 
     return users;
