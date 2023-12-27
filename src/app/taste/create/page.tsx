@@ -18,7 +18,7 @@ type FormValues = {
   }[];
   taste_category: string;
   taste_time: string;  // data
-  taste_place: string;
+  taste_location: string;
 }
 
 function CreatePage() {
@@ -32,7 +32,7 @@ function CreatePage() {
       }],
       taste_category: "",
       taste_time: "",
-      taste_place: "",
+      taste_location: "",
     }
   })
 
@@ -73,26 +73,21 @@ function CreatePage() {
             <div className="w-20" key={field.id}>
               <Label className="text-base font-semibold">照片</Label>
               <label htmlFor="taste-photo">
-                <input type="file" id="taste-photo" {...register(`taste_info.${index}.taste_photo` as const)}></input>
+                <input className="w-24" type="file" id="taste-photo" {...register(`taste_info.${index}.taste_photo` as const)}></input>
                 {/* <div className="h-10 flex items-center justify-center border border-black rounded-md file:text-theme-green cursor-pointer">
                   瀏覽
                 </div> */}
-                {/* {!watch(`taste_info.${index}.taste_photo`) || (
-                  watch(`taste_info.${index}.taste_photo`).length !== 0  && (
-                    "上傳成功"
-                  )
-                )} */}
               </label>
             </div>
             {index === 0 && (
-              <button className="pt-5 ml-4" onClick={() => append({taste_name: "", taste_count: 1, taste_photo: ""})}>
+              <button className="mt-5 ml-4" onClick={() => append({taste_name: "", taste_count: 1, taste_photo: ""})}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
               </button>
             )}
             {index > 0 && (
-              <button type="button" className="pt-5 ml-4" onClick={() => remove(index)}>
+              <button type="button" className="mt-5 ml-4" onClick={() => remove(index)}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                 </svg>
@@ -127,12 +122,12 @@ function CreatePage() {
           </div>
         </div>
         <div>
-          <Label htmlFor="taste-place" className="text-base font-semibold">取餐地點</Label>
+          <Label htmlFor="taste-location" className="text-base font-semibold">取餐地點</Label>
           <Input
             type="text"
-            id="taste-place"
+            id="taste-location"
             className='flex h-10 w-4/5 rounded-md border border-black text-base'
-            {...register("taste_place")}
+            {...register("taste_location")}
           />
         </div>
         <button type="submit" className="w-24 bg-theme-light-green hover:bg-theme-light-green-hover border border-black rounded-xl font-semibold text-black text-base py-2 rounded focus:outline-none focus:shadow-outline">
