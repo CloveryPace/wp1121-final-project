@@ -7,7 +7,7 @@ import { auth } from "@/lib/auth";
 export async function POST(request: Request) {
   const body = await request.json();
   const { categoryName, location, latestTime } = body;
-  
+
   // 從session取得是哪個user在操作
   const session = await auth();
   if (!session || !session?.user?.id) {
@@ -15,11 +15,12 @@ export async function POST(request: Request) {
   }
   const userId = session.user.id;
 
+  // 建立新的event
   const newEventId = await db.transaction(async (tx) => {
     const [newEvent] = await tx
       .insert(eventsTable)
       .values({
-        userId: userId,
+        userId: userId, // 建立者為目前登入的user
         categoryName: categoryName,
         location: location,
         latest_time: latestTime,
