@@ -7,16 +7,7 @@ import { Label } from "@/components/ui/label";
 
 import { useForm, useFieldArray } from "react-hook-form";
 
-// import { Oswald } from 'next/font/google';
-
 // import { useState } from "react";
-
-/*
-const oswald = Oswald({
-  weight: '300',
-  subsets: ['latin'],
-})
-*/
 
 type FormValues = {
   taste_info: {
@@ -45,7 +36,6 @@ function CreatePage() {
     }
   })
 
-  // const { register, control, handleSubmit, formState} = form;
   const { register, control, handleSubmit } = form;
   const { fields, append, remove} = useFieldArray({
     name: "taste_info",
@@ -67,8 +57,6 @@ function CreatePage() {
                 type="text"
                 id="taste-name"
                 className='flex h-10 w-full rounded-md border border-black text-base'
-                // value = {val.name}
-                // onChange = {(e) => handleChange(e, i)}
                 {...register(`taste_info.${index}.taste_name` as const)}
               />
             </div>
@@ -82,23 +70,9 @@ function CreatePage() {
                 {...register(`taste_info.${index}.taste_count` as const)}
               />
             </div>
-            {/* <div className="w-20" key={field.id}>
-              <Label htmlFor="taste-categoy" className="text-base font-semibold">標籤</Label>
-              <select {...register(`taste_info.${index}.taste_category` as const)} id="taste-category" className="h-10 w-full px-2 border border-black text-base rounded-md focus:border-theme-green block">
-                <option value="taiwnese">臺式</option>
-                <option value="chinese">中式</option>
-                <option value="western">西式</option>
-                <option value="japanese">日式</option>
-                <option value="korean">韓式</option>
-                <option value="breakfast">早餐</option>
-                <option value="drinks">飲料</option>
-                <option value="desserts">甜點</option>
-              </select>
-            </div> */}
             <div className="w-20" key={field.id}>
               <Label className="text-base font-semibold">照片</Label>
               <label htmlFor="taste-photo">
-                {/* <input type="file" id="taste-photo" name="myfile" hidden value = {val.photo}></input> */}
                 <input type="file" id="taste-photo" hidden {...register(`taste_info.${index}.taste_photo` as const)}></input>
                 <div className="h-10 flex items-center justify-center border border-black rounded-md file:text-theme-green cursor-pointer">
                   瀏覽
@@ -112,7 +86,6 @@ function CreatePage() {
                 </svg>
               </button>
             )}
-            {/* <button className="pt-5 ml-4" onClick={() => handleDelete(index)}>Delete</button> */}
             {index > 0 && (
               <button type="button" className="pt-5 ml-4" onClick={() => remove(index)}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
@@ -126,7 +99,6 @@ function CreatePage() {
         <div className="flex space-x-6">
           <div className="w-20">
             <Label htmlFor="taste-categoy" className="text-base font-semibold">標籤</Label>
-            {/* <select value = {val.category} id="taste-category" className="h-10 w-full px-2 border border-black text-base rounded-md focus:border-theme-green block"> */}
             <select {...register("taste_category")} id="taste-category" className="h-10 w-full px-2 border border-black text-base rounded-md focus:border-theme-green block">
               <option value="none" selected disabled hidden>----</option>
               <option value="taiwnese">臺式</option>
