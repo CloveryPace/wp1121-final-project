@@ -1,15 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client"
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CreateEvent } from "@/app/actions/actions";
-import { useForm  } from "react-hook-form";
-import { useFieldArray } from "react-hook-form";
-import { revalidatePath } from "next/cache";
-import { FieldValues, SubmitHandler } from "react-hook-form";
-import  getUserId from "@/app/actions/getUserId";
+
+import { useForm, useFieldArray } from "react-hook-form";
 
 // import { Oswald } from 'next/font/google';
+
 // import { useState } from "react";
 
 /*
@@ -30,15 +29,9 @@ type FormValues = {
   taste_time: string;  // data
   taste_place: string;
 }
+
 function CreatePage() {
-
-  const userId = getUserId();
-
-  const {
-    register,
-    control,
-    handleSubmit
-  } = useForm<FormValues>({
+  const form = useForm<FormValues>({
     defaultValues: {
       taste_info: [{
         taste_name: "",
@@ -50,32 +43,21 @@ function CreatePage() {
       taste_time: "",
       taste_place: "",
     }
-  });
+  })
 
+  // const { register, control, handleSubmit, formState} = form;
+  const { register, control, handleSubmit } = form;
   const { fields, append, remove} = useFieldArray({
     name: "taste_info",
     control,
   })
 
-  const onSubmit : SubmitHandler<FieldValues> = () =>{
-    console.log("form submitted");
+  const onSubmit = (data: FormValues) => {
+    console.log("form submitted:", data);
   }
 
   return (
-
-    <form 
-    className="flex h-screen w-full py-6 px-24 justify-center space-y-6" 
-    onSubmit={handleSubmit(onSubmit)}
-    action={async () => {
-      if (!userId) {
-        console.log("error");
-      }
-      else {
-        await CreateEvent("123", "中式", "二活", "22:00"); // test data //需要透過API來操作才不會有error
-        revalidatePath("/taste");
-      }
-    }}
-  >
+    <form className="flex h-screen w-full py-6 px-24 justify-center space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col mt-24 space-y-6 overflow-y-scroll no-scrollbar">
         {fields.map((field, index) => (
           <div key={field.id} className="flex flex-row mt-12 items-center space-x-6">
