@@ -70,24 +70,24 @@ function CreatePage() {
               />
             </div>
             <div className="w-20" key={field.id}>
-              <Label className="text-base font-semibold">照片</Label>
-              <label htmlFor="taste-photo">
-                <input className="w-24" type="file" id="taste-photo" {...register(`taste_info.${index}.taste_photo` as const)}></input>
+              {/* <Label className="text-base font-semibold">照片</Label> */}
+              <label className="" htmlFor="taste-photo">
+                <input className="w-36 mt-5 mr-6" type="file" accept="image/jpeg, image/jpg, image/png" id="taste-photo" {...register(`taste_info.${index}.taste_photo` as const)}></input>
                 {/* <div className="h-10 flex items-center justify-center border border-black rounded-md file:text-theme-green cursor-pointer">
                   瀏覽
                 </div> */}
               </label>
             </div>
             {index === 0 && (
-              <button type="button" className="mt-5 ml-4" onClick={() => append({taste_name: "", taste_count: 1, taste_photo: ""})}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+              <button type="button" className="mt-5" onClick={() => append({taste_name: "", taste_count: 1, taste_photo: ""})}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 ml-10">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
               </button>
             )}
             {index > 0 && (
-              <button type="button" className="mt-5 ml-4" onClick={() => remove(index)}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+              <button type="button" className="mt-5" onClick={() => remove(index)}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 ml-10">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14" />
                 </svg>
               </button>
