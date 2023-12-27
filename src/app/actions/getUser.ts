@@ -3,19 +3,15 @@ import { eq, not } from "drizzle-orm";
 
 import { db } from "@/db";
 import { usersTable } from "@/db/schema";
+import { auth } from "@/lib/auth";
 
-// import { auth } from "@/app/api/auth/[...nextauth]/route";
-
-const getUser = async () => {
+const getUsers = async () => {
   try {
-    /* 
     const session = await auth();
     if (!session || !session?.user?.id) {
       return null;
     }
     const userName = session.user.username;
-    */
-    const userName = "Test";
 
     const users = await db
       .select({
@@ -33,4 +29,4 @@ const getUser = async () => {
   }
 };
 
-export default getUser;
+export default getUsers;

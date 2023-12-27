@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "@/db";
-import { eventsTable, foodTable } from "@/db/schema";
-
+import { eventsTable, foodTable, reservationTable } from "@/db/schema";
 // import { pusherServer } from "@/lib/pusher/server";
 
 // 新增event
@@ -45,6 +44,29 @@ export const createFood = async (
       })
       .returning();
     return newFood.displayId;
+  } catch (error: any) {
+    return null;
+  }
+};
+
+// 新增event後，馬上接著新增食物
+export const createReservation = async (
+  userID: string,
+  foodID: string,
+  count: number,
+  createdAt: Date,
+) => {
+  try {
+    const [newReservation] = await db
+      .insert(reservationTable)
+      .values({
+        userId: userID,
+        foodId: foodID,
+        count: count,
+        createdAt: createdAt,
+      })
+      .returning();
+    return newReservation.id;
   } catch (error: any) {
     return null;
   }

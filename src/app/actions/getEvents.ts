@@ -10,7 +10,6 @@ const getEvents = async () => {
     if (!session || !session?.user?.id) {
       return null;
     }
-
     const events = await db
       .select({
         event_id: eventsTable.displayId,
