@@ -4,7 +4,6 @@ import {
   serial,
   uuid,
   varchar,
-  date,
   integer,
   timestamp,
   text,
@@ -18,7 +17,7 @@ export const usersTable = pgTable(
   {
     id: serial("id").primaryKey(),
     displayId: uuid("display_id").defaultRandom().notNull().unique(),
-    username: varchar("username", { length: 100 }).notNull(),
+    username: varchar("username", { length: 100 }).notNull().unique(),
     hashedPassword: varchar("hashed_password", { length: 100 }).notNull(),
     image: text("user_image"),
   },
@@ -38,12 +37,8 @@ export const eventsTable = pgTable(
         onDelete: "cascade",
         onUpdate: "cascade",
       }),
-    latest_time: date("latest_time").notNull(),
-    categoryId: uuid("category_id").references(() => usersTable.displayId, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
-    categoryName: varchar("category_name", { length: 100 }),
+    latest_time: varchar("latest_time").notNull(),
+    categoryName: varchar("category_name", { length: 100 }).notNull(),
     location: varchar("location", { length: 100 }).notNull(),
   },
   (table) => ({
@@ -63,7 +58,7 @@ export const foodTable = pgTable(
     }),
     name: varchar("name").notNull(),
     count: integer("count").notNull(),
-    image: text("image").notNull(),
+    image: text("image"),
   },
   (table) => ({
     displayIdIndex: index("food_display_id_index").on(table.displayId),
