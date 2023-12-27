@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-// import { NextResponse, type NextRequest } from "next/server";
-// import { and, eq } from "drizzle-orm";
-// // import Pusher from "pusher";
-// import { db } from "@/db";
-// // import { eventsTable, usersToDocumentsTable } from "@/db/schema";
-// import { privateEnv } from "@/lib/env/private";
-// // import { updateDocSchema } from "@/validators/updateDocument";
-=======
 import { NextResponse } from "next/server";
 
 import { db } from "@/db";
@@ -16,8 +7,7 @@ import { auth } from "@/lib/auth";
 export async function POST(request: Request) {
   const body = await request.json();
   const { categoryName, location, latestTime } = body;
->>>>>>> api
-
+  
   // 從session取得是哪個user在操作
   const session = await auth();
   if (!session || !session?.user?.id) {
