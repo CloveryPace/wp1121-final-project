@@ -15,7 +15,7 @@ function DetailsPage() {  // params: {food.id}
   const [reserve, setReserve] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-col h-screen w-full py-6 px-24 mx-4 space-y-6 overflow-y-scroll no-scrollbar">
+    <div className="flex flex-col h-screen w-full py-6 px-24 mx-4 space-y-6">
       <div className="h-10 mt-24 flex space-x-6 justify-start items-end">
         <div className="text-4xl select-none">餐點名稱</div>
         <div className={oswald.className}>
