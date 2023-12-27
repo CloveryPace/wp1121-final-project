@@ -36,7 +36,7 @@ function CreatePage() {
     }
   })
 
-  const { register, control, handleSubmit, watch } = form;
+  const { register, control, handleSubmit } = form;
   const { fields, append, remove} = useFieldArray({
     name: "taste_info",
     control,
@@ -66,7 +66,6 @@ function CreatePage() {
                 type="text"
                 id="taste-count"
                 className='flex h-10 w-full rounded-md border border-black text-base'
-                // value = {val.count}
                 {...register(`taste_info.${index}.taste_count` as const)}
               />
             </div>
@@ -80,7 +79,7 @@ function CreatePage() {
               </label>
             </div>
             {index === 0 && (
-              <button className="mt-5 ml-4" onClick={() => append({taste_name: "", taste_count: 1, taste_photo: ""})}>
+              <button type="button" className="mt-5 ml-4" onClick={() => append({taste_name: "", taste_count: 1, taste_photo: ""})}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
