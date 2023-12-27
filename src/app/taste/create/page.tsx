@@ -53,6 +53,7 @@ function CreatePage() {
   })
 
   const onSubmit = (data: FormValues) => {
+    console.log("submitted");
     console.log("form submitted:", data);
   }
 
@@ -156,7 +157,7 @@ function CreatePage() {
             className='flex h-10 w-4/5 rounded-md border border-black text-base'
           />
         </div>
-        <button className="w-24 bg-theme-light-green hover:bg-theme-light-green-hover border border-black rounded-xl font-semibold text-black text-base py-2 rounded focus:outline-none focus:shadow-outline" type="button">
+        <button type="submit" className="w-24 bg-theme-light-green hover:bg-theme-light-green-hover border border-black rounded-xl font-semibold text-black text-base py-2 rounded focus:outline-none focus:shadow-outline">
           確定新增
         </button>
       </div>
