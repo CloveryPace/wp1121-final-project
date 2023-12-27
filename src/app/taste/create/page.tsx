@@ -74,9 +74,9 @@ function CreatePage() {
               <Label className="text-base font-semibold">照片</Label>
               <label htmlFor="taste-photo">
                 <input type="file" id="taste-photo" {...register(`taste_info.${index}.taste_photo` as const)}></input>
-                <div className="h-10 flex items-center justify-center border border-black rounded-md file:text-theme-green cursor-pointer">
+                {/* <div className="h-10 flex items-center justify-center border border-black rounded-md file:text-theme-green cursor-pointer">
                   瀏覽
-                </div>
+                </div> */}
                 {/* {!watch(`taste_info.${index}.taste_photo`) || (
                   watch(`taste_info.${index}.taste_photo`).length !== 0  && (
                     "上傳成功"
