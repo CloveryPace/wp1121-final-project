@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 "use client"
 
 import { Input } from "@/components/ui/input";
@@ -5,14 +7,16 @@ import { Label } from "@/components/ui/label";
 
 import { useForm, useFieldArray } from "react-hook-form";
 
-import { Oswald } from 'next/font/google';
+// import { Oswald } from 'next/font/google';
 
 // import { useState } from "react";
 
+/*
 const oswald = Oswald({
   weight: '300',
   subsets: ['latin'],
 })
+*/
 
 type FormValues = {
   taste_info: {
@@ -39,7 +43,8 @@ function CreatePage() {
     }
   })
 
-  const { register, control, handleSubmit, formState} = form;
+  // const { register, control, handleSubmit, formState} = form;
+  const { register, control, handleSubmit } = form;
   const { fields, append, remove} = useFieldArray({
     name: "taste_info",
     control,
@@ -53,8 +58,8 @@ function CreatePage() {
     <form className="flex h-screen w-full py-6 px-24 justify-center space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col mt-24 space-y-6 overflow-y-scroll no-scrollbar">
         {fields.map((field, index) => (
-          <div className="flex flex-row mt-12 items-center space-x-6">
-            <div className="w-80" key={field.id}>
+          <div key={field.id} className="flex flex-row mt-12 items-center space-x-6">
+            <div className="w-80">
               <Label htmlFor="taste-name" className="text-base font-semibold">餐點名稱</Label>
               <Input
                 type="text"
