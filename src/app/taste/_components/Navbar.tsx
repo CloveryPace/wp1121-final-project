@@ -8,13 +8,24 @@ import ClickAwayListener from "@mui/material/ClickAwayListener";
 
 import { Input } from "@/components/ui/input";
 
+// import { redirect } from "next/navigation";
+// import { publicEnv } from "@/lib/env/public";
+// import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
+
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
 });
 
 function Navbar() {
+  const router = useRouter();
   const [isSearch, setIsSearch] = useState<boolean>(false);
+
+  const handleClick = () => {
+    router.push("/taste/create");
+  };
+
   return (
     <nav className="fixed flex w-full flex-wrap justify-between border-r bg-theme-green bg-opacity-30 py-6">
       <div className={oswald.className}>
@@ -24,6 +35,7 @@ function Navbar() {
         <button
           className="focus:shadow-outline min-w-[100px] rounded rounded-xl bg-theme-green bg-opacity-80 px-4 py-2 text-base font-semibold text-white hover:bg-opacity-70 focus:outline-none"
           type="button"
+          onClick={() => handleClick()}
         >
           新增餐點
         </button>
