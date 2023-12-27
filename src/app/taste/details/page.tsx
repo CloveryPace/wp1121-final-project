@@ -17,10 +17,10 @@ function DetailsPage() {  // params: {food.id}
   return (
     <div className="flex flex-col h-screen w-full py-6 px-24 mx-4 space-y-6 overflow-y-scroll no-scrollbar">
       <div className="h-10 mt-24 flex space-x-6 justify-start items-end">
-        <div className="text-4xl">餐點名稱</div>
+        <div className="text-4xl select-none">餐點名稱</div>
         <div className={oswald.className}>
           {/* 從 foodTable 連到 eventTable 再連到 user */}
-          <div className="mb-0.5 text-lg">@username</div>
+          <div className="mb-0.5 text-lg select-none cursor-pointer">@username</div>
         </div>
       </div>
       {/* flex justify-start space-x-24 */}
@@ -36,7 +36,7 @@ function DetailsPage() {  // params: {food.id}
           />
         <div className="flex flex-col">
           <hr className="h-0.5 mb-8 bg-gray-300 border-0"></hr>
-          <div className="flex flex-col space-y-6">
+          <div className="flex flex-col space-y-6 select-none">
             <div className="text-xl">數量：1</div>
             <div className="text-xl">取餐地點：臺灣大學</div>
             <div className="text-xl">最後取餐時間：21:00</div>

@@ -47,7 +47,7 @@ function CreatePage() {
   }
 
   return (
-    <form className="flex h-screen w-full py-6 px-24 justify-center space-y-6" onSubmit={handleSubmit(onSubmit)}>
+    <form className="flex h-screen w-full py-6 px-24 justify-center space-y-6 select-none" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col mt-24 space-y-6 overflow-y-scroll no-scrollbar">
         {fields.map((field, index) => (
           <div key={field.id} className="flex flex-row mt-12 items-center space-x-6">

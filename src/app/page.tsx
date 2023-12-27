@@ -29,7 +29,7 @@ export default function Login() {
     <main className="flex-rows fixed top-0 flex h-screen w-full items-center overflow-hidden">
       <div className="flex w-3/5 min-w-[650px] max-w-[1000px] flex-col border-r bg-white pb-10">
         <div className={oswald.className}>
-          <div className="mx-24 mt-20 px-24 py-6 text-4xl text-theme-green">
+          <div className="mx-24 mt-20 px-24 py-6 text-4xl text-theme-green select-none">
             NewTaste
           </div>
         </div>
@@ -69,14 +69,14 @@ export default function Login() {
             </button>
             {isSignUp ? (
               <a
-                className="cursor-pointer text-sm hover:text-theme-green"
+                className="cursor-pointer text-sm hover:text-theme-green select-none"
                 onClick={() => setIsSignUp(false)}
               >
                 已有帳號
               </a>
             ) : (
               <a
-                className="cursor-pointer text-sm hover:text-theme-green"
+                className="cursor-pointer text-sm hover:text-theme-green select-none"
                 onClick={() => setIsSignUp(true)}
               >
                 申請帳號

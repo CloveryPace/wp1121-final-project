@@ -38,7 +38,7 @@ function Navbar() {
   return (
     <nav className="fixed flex w-full flex-wrap justify-between border-r bg-theme-green bg-opacity-30 py-6">
       <div className={oswald.className}>
-        <div className="px-10 text-4xl">NewTaste</div>
+        <div className="px-10 text-4xl select-none">NewTaste</div>
       </div>
       <div className="flex space-x-16 px-10">
         <button
