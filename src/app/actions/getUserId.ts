@@ -1,20 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { eq } from "drizzle-orm";
+import { auth } from "@/lib/auth";
 
-import { db } from "@/db";
-import { usersTable } from "@/db/schema";
-
-const getUserId = async (userID: string) => {
+const getUserId = async () => {
   try {
-    const users = await db
-      .select({
-        username: usersTable.username,
-        user_id: usersTable.displayId,
-      })
-      .from(usersTable)
-      .where(eq(usersTable.displayId, userID))
-      .execute();
-    return users;
+    const session = await auth();
+    if (!session || !session?.user?.id) {
+      return null;
+    }
+    const userID = session.user.id;
+    return userID;
   } catch (error: any) {
     return null;
   }

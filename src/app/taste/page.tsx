@@ -2,6 +2,7 @@
 import { auth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import { publicEnv } from "@/lib/env/public";
+// import getEvents from "../actions/getEvents";
 
 async function TastePage() {
   const session = await auth();
@@ -11,6 +12,8 @@ async function TastePage() {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
 
+  // const events = await getEvents();
+
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <div className="flex flex-col items-center justify-center">
@@ -19,6 +22,8 @@ async function TastePage() {
           {JSON.stringify(session)}
         </p>
       </div>
+      <section className="flex w-full flex-col pt-3">
+      </section>
     </div>
   );
 }

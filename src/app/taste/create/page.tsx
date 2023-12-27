@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 "use client"
-
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-import { useForm, useFieldArray } from "react-hook-form";
+import { CreateEvent } from "@/app/actions/actions";
+import { useForm  } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
+import { revalidatePath } from "next/cache";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+import  getUserId from "@/app/actions/getUserId";
 
 // import { Oswald } from 'next/font/google';
-
 // import { useState } from "react";
 
 /*
@@ -18,44 +19,51 @@ const oswald = Oswald({
 })
 */
 
-type FormValues = {
-  taste_info: {
-    taste_name: string;
-    taste_count: number;
-    taste_category: string;
-    taste_photo: string;  // url
-  }[];
-  taste_place: string;
-  taste_time: string;  // data
-}
-
 function CreatePage() {
-  const form = useForm<FormValues>({
+
+  const userId = getUserId();
+
+  const {
+    register,
+    control,
+    handleSubmit
+  } = useForm<FieldValues>({
     defaultValues: {
       taste_info: [{
         taste_name: "",
         taste_count: 1,
         taste_category: "",
-        taste_photo: "",
       }],
+      taste_photo: "",
       taste_place: "",
       taste_time: "",
     }
-  })
+  });
 
-  // const { register, control, handleSubmit, formState} = form;
-  const { register, control, handleSubmit } = form;
   const { fields, append, remove} = useFieldArray({
     name: "taste_info",
     control,
   })
 
-  const onSubmit = (data: FormValues) => {
-    console.log("form submitted:", data);
+  const onSubmit : SubmitHandler<FieldValues> = () =>{
+    console.log("form submitted");
   }
 
   return (
-    <form className="flex h-screen w-full py-6 px-24 justify-center space-y-6" onSubmit={handleSubmit(onSubmit)}>
+
+    <form 
+    className="flex h-screen w-full py-6 px-24 justify-center space-y-6" 
+    onSubmit={handleSubmit(onSubmit)}
+    action={async () => {
+      if (!userId) {
+        console.log("error");
+      }
+      else {
+        await CreateEvent("123", "中式", "二活", "22:00"); // test data //需要透過API來操作才不會有error
+        revalidatePath("/taste");
+      }
+    }}
+  >
       <div className="flex flex-col mt-24 space-y-6 overflow-y-scroll no-scrollbar">
         {fields.map((field, index) => (
           <div key={field.id} className="flex flex-row mt-12 items-center space-x-6">

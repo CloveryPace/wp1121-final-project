@@ -39,11 +39,7 @@ export const eventsTable = pgTable(
         onUpdate: "cascade",
       }),
     latest_time: date("latest_time").notNull(),
-    categoryId: uuid("category_id").references(() => usersTable.displayId, {
-      onDelete: "cascade",
-      onUpdate: "cascade",
-    }),
-    categoryName: varchar("category_name", { length: 100 }),
+    categoryName: varchar("category_name", { length: 100 }).notNull(),
     location: varchar("location", { length: 100 }).notNull(),
   },
   (table) => ({
@@ -63,7 +59,7 @@ export const foodTable = pgTable(
     }),
     name: varchar("name").notNull(),
     count: integer("count").notNull(),
-    image: text("image").notNull(),
+    image: text("image"),
   },
   (table) => ({
     displayIdIndex: index("food_display_id_index").on(table.displayId),

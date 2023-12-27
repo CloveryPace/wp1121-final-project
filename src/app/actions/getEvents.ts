@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "@/db";
 import { eventsTable } from "@/db/schema";
-
-// import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/lib/auth";
 
 // 取得所有event，顯示在/taste畫面
 const getEvents = async () => {
   try {
-    /* 
     const session = await auth();
     if (!session || !session?.user?.id) {
       return null;
     }
-    */
 
     const events = await db
       .select({

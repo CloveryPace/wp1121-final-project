@@ -12,7 +12,6 @@ export const CreateEvent = async (
   latest_time: string,
 ) => {
   try {
-    ("use server");
     const [newEvent] = await db
       .insert(eventsTable)
       .values({
@@ -35,7 +34,6 @@ export const createFood = async (
   count: number,
   image: string,
 ) => {
-  "use server";
   try {
     const [newFood] = await db
       .insert(foodTable)
