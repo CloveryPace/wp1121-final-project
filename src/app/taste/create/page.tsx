@@ -53,7 +53,6 @@ function CreatePage() {
   })
 
   const onSubmit = (data: FormValues) => {
-    console.log("submitted");
     console.log("form submitted:", data);
   }
 
@@ -128,7 +127,7 @@ function CreatePage() {
           <div className="w-20">
             <Label htmlFor="taste-categoy" className="text-base font-semibold">標籤</Label>
             {/* <select value = {val.category} id="taste-category" className="h-10 w-full px-2 border border-black text-base rounded-md focus:border-theme-green block"> */}
-            <select id="taste-category" className="h-10 w-full px-2 border border-black text-base rounded-md focus:border-theme-green block">
+            <select {...register("taste_category")} id="taste-category" className="h-10 w-full px-2 border border-black text-base rounded-md focus:border-theme-green block">
               <option value="none" selected disabled hidden>----</option>
               <option value="taiwnese">臺式</option>
               <option value="chinese">中式</option>
@@ -146,6 +145,7 @@ function CreatePage() {
               type="text"
               id="taste-time"
               className='flex h-10 w-4/5 rounded-md border border-black text-base'
+              {...register("taste_time")}
             />
           </div>
         </div>
@@ -155,6 +155,7 @@ function CreatePage() {
             type="text"
             id="taste-place"
             className='flex h-10 w-4/5 rounded-md border border-black text-base'
+            {...register("taste_place")}
           />
         </div>
         <button type="submit" className="w-24 bg-theme-light-green hover:bg-theme-light-green-hover border border-black rounded-xl font-semibold text-black text-base py-2 rounded focus:outline-none focus:shadow-outline">
