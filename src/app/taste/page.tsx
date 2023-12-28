@@ -1,8 +1,11 @@
 // import { BiError } from "react-icons/bi";
-import { auth } from "@/lib/auth";
+// import { BiError } from "react-icons/bi";
 import { redirect } from "next/navigation";
+
+import getFood from "../actions/getFood";
+
+import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
-// import getEvents from "../actions/getEvents";
 
 async function TastePage() {
   const session = await auth();
@@ -12,7 +15,7 @@ async function TastePage() {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
 
-  // const events = await getEvents();
+  const food = await getFood();
 
   return (
     <div className="flex h-screen w-full items-center justify-center">
@@ -21,9 +24,11 @@ async function TastePage() {
         <p className="text-lg font-semibold text-slate-700">
           {JSON.stringify(session)}
         </p>
+        <p className="text-lg font-semibold text-slate-700">
+          {JSON.stringify(food)}
+        </p>
       </div>
-      <section className="flex w-full flex-col pt-3">
-      </section>
+      <section className="flex w-full flex-col pt-3"></section>
     </div>
   );
 }
