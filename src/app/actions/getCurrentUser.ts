@@ -13,18 +13,17 @@ const getUsers = async () => {
     }
     const userId = session.user.id; // 目前登入的user
 
-    // 取得目前的user資訊
-    const users = await db
-      .select({
-        username: usersTable.username,
-        userId: usersTable.displayId,
-        image: usersTable.image,
-      })
-      .from(usersTable)
-      .where(eq(usersTable.displayId, userId))
-      .execute();
+    // 取得目前user的資訊
+    const user = await db.query.usersTable.findFirst({
+      where: eq(usersTable.displayId, userId),
+      columns: {
+        username: true,
+        displayId: true,
+        image: true,
+      },
+    });
 
-    return users;
+    return user;
   } catch (error: any) {
     return null;
   }
