@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useForm, useFieldArray } from "react-hook-form";
@@ -9,8 +8,6 @@ import axios from "axios";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
