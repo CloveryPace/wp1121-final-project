@@ -3,6 +3,7 @@
 import { useForm, useFieldArray } from "react-hook-form";
 
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import axios from "axios";
 
@@ -25,6 +26,7 @@ type FormValues = {
 function CreatePage() {
   const { data: session } = useSession();
   const userId = session?.user?.id;
+  const router = useRouter();
 
   const form = useForm<FormValues>({
     defaultValues: {
@@ -54,6 +56,8 @@ function CreatePage() {
     axios.post("/api/events", {
       ...data,
     });
+    router.refresh();
+    router.push("/taste");
   };
 
   return (
