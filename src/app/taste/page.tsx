@@ -20,11 +20,14 @@ async function TastePage() {
 
   return (
     <div className="no-scrollbar my-32 h-96 w-full space-y-6 overflow-y-scroll">
-      <div className="no-scrollbar flex space-x-4 overflow-x-scroll px-12">
+      <div className="no-scrollbar mx-12 flex space-x-4 overflow-x-scroll">
         {food?.map((item, i) => {
           if (item.count > 0) {
             return (
-              <Card className="h-64 w-96 cursor-pointer select-none" key={i}>
+              <Card
+                className="h-64 w-48 shrink-0 cursor-pointer select-none"
+                key={i}
+              >
                 <Link href={`/taste/${item.food_id}`}>
                   <CardHeader className="max-h-32">
                     <Image
@@ -52,11 +55,14 @@ async function TastePage() {
         })}
       </div>
 
-      <div className="flex space-x-4 px-12">
+      <div className="no-scrollbar mx-12 flex space-x-4 overflow-x-scroll">
         {food?.map((item, i) => {
           if (item.count > 0) {
             return (
-              <Card className="h-64 w-48 cursor-pointer select-none" key={i}>
+              <Card
+                className="h-64 w-48 shrink-0 cursor-pointer select-none"
+                key={i}
+              >
                 <Link href={`/taste/${item.food_id}`}>
                   <CardHeader className="max-h-32">
                     <Image
