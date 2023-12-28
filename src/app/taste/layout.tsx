@@ -4,7 +4,7 @@ function TasteLayout({ children }: { children: React.ReactNode }) {
   return (
     <main className="h-screen w-full">
       <Navbar />
-      <div className="w-full">{children}</div>
+      <div className="no-scrollbar w-full overflow-y-scroll">{children}</div>
     </main>
   );
 }

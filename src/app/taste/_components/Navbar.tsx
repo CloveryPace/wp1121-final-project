@@ -3,15 +3,23 @@
 import { useState } from "react";
 
 import { Oswald } from "next/font/google";
-
-import ClickAwayListener from "@mui/material/ClickAwayListener";
-
-import { Input } from "@/components/ui/input";
-
+import Link from "next/link";
 // import { redirect } from "next/navigation";
 // import { publicEnv } from "@/lib/env/public";
 // import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
+
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 
 const oswald = Oswald({
   weight: "300",
@@ -29,11 +37,11 @@ function Navbar() {
   return (
     <nav className="fixed flex w-full flex-wrap justify-between border-r bg-theme-green bg-opacity-30 py-6">
       <div className={oswald.className}>
-        <div className="px-10 text-4xl">NewTaste</div>
+        <div className="select-none px-10 text-4xl">NewTaste</div>
       </div>
       <div className="flex space-x-16 px-10">
         <button
-          className="focus:shadow-outline min-w-[100px] rounded rounded-xl bg-theme-green bg-opacity-80 px-4 py-2 text-base font-semibold text-white hover:bg-opacity-70 focus:outline-none"
+          className="focus:shadow-outline min-w-[100px] rounded bg-theme-green bg-opacity-80 px-4 py-2 text-base font-semibold text-white shadow-[0_4px_9px_-4px_#b1c381] hover:bg-opacity-70 focus:outline-none"
           type="button"
           onClick={() => handleClick()}
         >
@@ -65,7 +73,7 @@ function Navbar() {
               />
             </svg>
           </button>
-          <button>
+          {/* <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -80,7 +88,36 @@ function Navbar() {
                 d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
               />
             </svg>
-          </button>
+          </button> */}
+
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth="1.5"
+                stroke="currentColor"
+                className="h-9 w-9"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>@username</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>我的餐點</DropdownMenuItem>
+              <DropdownMenuItem>我的訂單</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <Link href={`/auth/signout`}>
+                <DropdownMenuItem>登出</DropdownMenuItem>
+              </Link>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </nav>

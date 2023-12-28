@@ -3,10 +3,14 @@
 
 import { useForm, useFieldArray } from "react-hook-form";
 
+import { useSession } from "next-auth/react";
+
 import axios from "axios";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -22,6 +26,9 @@ type FormValues = {
 };
 
 function CreatePage() {
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+
   const form = useForm<FormValues>({
     defaultValues: {
       taste_info: [
@@ -45,6 +52,7 @@ function CreatePage() {
   });
 
   const onSubmit = (data: FormValues) => {
+    if (!userId) return;
     console.log("form submitted:", data);
     axios.post("/api/events", {
       ...data,
@@ -53,7 +61,7 @@ function CreatePage() {
 
   return (
     <form
-      className="flex h-screen w-full justify-center space-y-6 px-24 py-6"
+      className="flex h-screen w-full select-none justify-center space-y-6 px-24 py-6"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="no-scrollbar mt-24 flex flex-col space-y-6 overflow-y-scroll">
@@ -86,26 +94,24 @@ function CreatePage() {
               />
             </div>
             <div className="w-20" key={field.id}>
-              <Label className="text-base font-semibold">照片</Label>
-              <label htmlFor="taste-photo">
+              {/* <Label className="text-base font-semibold">照片</Label> */}
+              <label className="" htmlFor="taste-photo">
                 <input
+                  className="mr-6 mt-5 w-36"
                   type="file"
+                  accept="image/jpeg, image/jpg, image/png"
                   id="taste-photo"
                   {...register(`taste_info.${index}.taste_photo` as const)}
                 ></input>
                 {/* <div className="h-10 flex items-center justify-center border border-black rounded-md file:text-theme-green cursor-pointer">
                   瀏覽
                 </div> */}
-                {/* {!watch(`taste_info.${index}.taste_photo`) || (
-                  watch(`taste_info.${index}.taste_photo`).length !== 0  && (
-                    "上傳成功"
-                  )
-                )} */}
               </label>
             </div>
             {index === 0 && (
               <button
-                className="ml-4 pt-5"
+                type="button"
+                className="mt-5"
                 onClick={() =>
                   append({ taste_name: "", taste_count: 1, taste_photo: "" })
                 }
@@ -116,7 +122,7 @@ function CreatePage() {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="h-6 w-6"
+                  className="ml-10 h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -129,7 +135,7 @@ function CreatePage() {
             {index > 0 && (
               <button
                 type="button"
-                className="ml-4 pt-5"
+                className="mt-5"
                 onClick={() => remove(index)}
               >
                 <svg
@@ -138,7 +144,7 @@ function CreatePage() {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="h-6 w-6"
+                  className="ml-10 h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
