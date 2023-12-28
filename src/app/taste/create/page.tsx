@@ -2,6 +2,8 @@
 
 "use client"
 
+import { useSession } from "next-auth/react";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -22,6 +24,9 @@ type FormValues = {
 }
 
 function CreatePage() {
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+
   const form = useForm<FormValues>({
     defaultValues: {
       taste_info: [{
@@ -43,6 +48,7 @@ function CreatePage() {
   })
 
   const onSubmit = (data: FormValues) => {
+    if (!userId) return;
     console.log("form submitted:", data);
   }
 
