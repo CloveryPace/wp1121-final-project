@@ -17,7 +17,6 @@ async function MyFoodPage() {
   return (
     <div className="no-scrollbar my-32 h-96 w-full space-y-12 overflow-y-scroll">
       <MyFoodList userId={userId} />
-      <MyFoodList userId={userId} />
     </div>
   );
 }

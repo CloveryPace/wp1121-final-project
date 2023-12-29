@@ -1,16 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 
-// import { redirect } from "next/navigation";
 import { getFoodByUserId, getFoodByCategory } from "@/app/actions/getFood";
+import getUsername from "@/app/actions/getUsername";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-// import { useState, useEffect } from "react";
-
-// import axios from "axios";
-
-// import { auth } from "@/lib/auth";
-// import { publicEnv } from "@/lib/env/public";
 
 type CategoryProps = {
   eng: string;
@@ -29,11 +22,11 @@ export async function FoodList({ eng, chi }: CategoryProps) {
           if (item.count > 0) {
             return (
               <Card
-                className="h-64 w-48 shrink-0 cursor-pointer select-none"
+                className="h-72 w-56 shrink-0 cursor-pointer select-none"
                 key={i}
               >
                 <Link href={`/taste/${item.food_id}`}>
-                  <CardHeader className="max-h-28 min-h-24 items-center">
+                  <CardHeader className="max-h-36 min-h-28">
                     <Image
                       src="/potato-salad.svg"
                       alt="food"
@@ -67,18 +60,20 @@ export async function FoodList({ eng, chi }: CategoryProps) {
 
 export async function MyFoodList(userId: { userId: string }) {
   const food = await getFoodByUserId(userId);
+  const username = await getUsername(userId);
   return (
     <div className="mx-12 flex flex-col space-y-4">
-      <div className="grid grid-cols-4">
+      <p className="select-none text-2xl">@{username?.username}</p>
+      <div className="grid grid-cols-5 gap-x-4 gap-y-8">
         {food?.map((item, i) => {
           if (item.count > 0) {
             return (
               <Card
-                className="h-64 w-64 shrink-0 cursor-pointer select-none"
+                className="h-72 w-56 shrink-0 cursor-pointer select-none"
                 key={i}
               >
                 <Link href={`/taste/${item.food_id}`}>
-                  <CardHeader className="max-h-32">
+                  <CardHeader className="max-h-36 min-h-28">
                     <Image
                       src="/potato-salad.svg"
                       alt="food"
