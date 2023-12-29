@@ -4,7 +4,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 // future work?
 // import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from "bcryptjs";
-// // 用來hash密碼
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";

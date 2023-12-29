@@ -18,12 +18,35 @@ export default function Login() {
   const [isSignUp, setIsSignUp] = useState<boolean>(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmpassword, setConfirmpassword] = useState("");
   const handleSubmit = () => {
-    signIn("credentials", {
-      username,
-      password,
-      callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/taste`,
-    });
+    if (isSignUp) {
+      if (confirmpassword != password) {
+        alert("Confirm password does not match password");
+      } else {
+        signIn("credentials", {
+          username,
+          password,
+          callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}`,
+        }).then((callback) => {
+          if (callback?.error) {
+            alert("Fail to sign up");
+          } else {
+            alert("Sign up successfully. Please sign in.");
+          }
+        });
+      }
+    } else {
+      signIn("credentials", {
+        username,
+        password,
+        callbackUrl: `${publicEnv.NEXT_PUBLIC_BASE_URL}/taste`,
+      }).then((callback) => {
+        if (callback?.error) {
+          alert("Fail to sign in");
+        }
+      });
+    }
   };
   return (
     <main className="flex-rows fixed top-0 flex h-screen w-full items-center overflow-hidden">
@@ -57,30 +80,49 @@ export default function Login() {
               type="confirm password"
               placeholder="確認密碼"
               className="flex h-14 w-full rounded-md border border-black text-base"
+              onChange={(e) => {
+                setConfirmpassword(e.target.value);
+              }}
+              value={confirmpassword}
             />
           )}
-          <div className="py-4">
-            <button
-              className="focus:shadow-outline w-full rounded rounded-xl border border-black bg-theme-light-green px-4 py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
-              type="button"
-              onClick={handleSubmit}
-            >
-              登入
-            </button>
+          <div className="py-1">
             {isSignUp ? (
-              <a
-                className="cursor-pointer select-none text-sm hover:text-theme-green"
-                onClick={() => setIsSignUp(false)}
-              >
-                已有帳號
-              </a>
+              <div>
+                <button
+                  className="focus:shadow-outline w-full rounded rounded-xl border border-black bg-theme-light-green px-4 py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
+                  type="button"
+                  onClick={handleSubmit}
+                >
+                  新增帳號
+                </button>
+                <div className="py-2">
+                  <a
+                    className="cursor-pointer select-none text-sm hover:text-theme-green"
+                    onClick={() => setIsSignUp(false)}
+                  >
+                    已有帳號？
+                  </a>
+                </div>
+              </div>
             ) : (
-              <a
-                className="cursor-pointer select-none text-sm hover:text-theme-green"
-                onClick={() => setIsSignUp(true)}
-              >
-                申請帳號
-              </a>
+              <div>
+                <button
+                  className="focus:shadow-outline w-full rounded rounded-xl border border-black bg-theme-light-green px-4 py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
+                  type="button"
+                  onClick={handleSubmit}
+                >
+                  登入
+                </button>
+                <div className="py-2">
+                  <a
+                    className="cursor-pointer select-none text-sm hover:text-theme-green"
+                    onClick={() => setIsSignUp(true)}
+                  >
+                    申請帳號
+                  </a>
+                </div>
+              </div>
             )}
           </div>
         </div>

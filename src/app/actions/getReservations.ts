@@ -1,22 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextResponse, NextRequest } from "next/server";
-
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
-import { eventsTable, foodTable, reservationTable } from "@/db/schema";
+import { foodTable, reservationTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
-export async function GET() {
+const getReservations = async () => {
   try {
     const session = await auth();
     if (!session || !session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      return null;
     }
     const userId = session.user.id;
-    console.log(userId);
 
     const foodSubquery = db.$with("food_subquery").as(
       db
@@ -43,11 +38,10 @@ export async function GET() {
       .leftJoin(foodSubquery, eq(foodTable.displayId, reservationTable.foodId))
       .execute();
 
-    return NextResponse.json(reserve_food, { status: 200 });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+    return reserve_food;
+  } catch (error: any) {
+    return null;
   }
-}
+};
+
+export default getReservations;
