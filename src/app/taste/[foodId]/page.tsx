@@ -6,9 +6,9 @@ import { Oswald } from "next/font/google";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 
-import axios from "axios";
-
-import type { Food } from "@/lib/types/db";
+// import axios from "axios";
+// import type { Food } from "@/lib/types/db";
+// import getFoodById from "@/app/actions/getFoodById";
 
 const oswald = Oswald({
   weight: "300",
@@ -17,13 +17,13 @@ const oswald = Oswald({
 
 function DetailsPage() {
   const { foodId } = useParams();
-  console.log(foodId);
-  // params: {food.id}
+  // const food = getFoodById(JSON.stringify(foodId));
+  console.log(JSON.stringify(foodId));
   const [reserve, setReserve] = useState<boolean>(false);
-  const [data, setData] = useState<Food | null>(null);
 
+  /*
   axios
-    .get(`/api/delete/${foodId}`, { params: { foodId: foodId } })
+    .get(`/api/foods/${foodId}`, { params: { foodId: foodId } })
     .then((res) => {
       console.log(res.data);
       setData(res.data);
@@ -33,6 +33,7 @@ function DetailsPage() {
     });
 
   console.log(data);
+   */
 
   return (
     <div className="mx-4 flex h-screen w-full flex-col space-y-6 px-24 py-6">

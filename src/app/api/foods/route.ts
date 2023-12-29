@@ -44,17 +44,9 @@ export async function GET(
       return NextResponse.json({ error: "Food Not Found" }, { status: 404 });
     }
 
-    const foodId = dbFood.foodId;
-    const count = dbFood.count;
-    const name = dbFood.name;
-    const image = dbFood.image;
-
     return NextResponse.json(
       {
-        id: foodId,
-        name: name,
-        count: count,
-        image: image,
+        dbFood,
       },
       { status: 200 },
     );
