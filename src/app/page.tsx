@@ -77,7 +77,7 @@ export default function Login() {
           />
           {isSignUp && (
             <Input
-              type="confirm password"
+              type="password"
               placeholder="確認密碼"
               className="flex h-14 w-full rounded-md border border-black text-base"
               onChange={(e) => {

@@ -46,7 +46,14 @@ function Navbar() {
   return (
     <nav className="fixed flex w-full flex-wrap justify-between border-r bg-theme-green bg-opacity-30 py-6">
       <div className={oswald.className}>
-        <div className="select-none px-10 text-4xl">NewTaste</div>
+        <div
+          className="cursor-pointer select-none px-10 text-4xl"
+          onClick={() => {
+            router.push("/");
+          }}
+        >
+          NewTaste
+        </div>
       </div>
       <div className="flex space-x-10 px-10">
         <button

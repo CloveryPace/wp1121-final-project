@@ -220,7 +220,7 @@ function CreatePage() {
               最後取餐時間
             </Label>
             <Input
-              type="text"
+              type="time"
               id="taste-time"
               className="flex h-10 w-4/5 rounded-md border border-black text-base"
               {...register("taste_time", {
