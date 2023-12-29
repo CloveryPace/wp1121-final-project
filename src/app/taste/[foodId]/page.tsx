@@ -40,7 +40,6 @@ function DetailsPage() {
         console.error("Error fetching food:", error);
       }
     };
-
     fetchFood();
   }, [foodId]);
 
