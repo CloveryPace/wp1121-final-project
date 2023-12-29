@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
@@ -44,12 +46,12 @@ function DetailsPage() {
         const response = await axios.get(`/api/foods/${foodId}`);
         setFood(response.data);
         setFoodCount(food?.count);
-        console.log(foodCount);
+        console.log("食物剩餘數量" + foodCount);
         // 查看user是否已經預定過
         // 若預定過了就disable按鈕
         const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
         setReserve(reserve_or_not.data);
-        console.log(reserve);
+        console.log("是否要預定" + reserve);
       } catch (error) {
         console.error("Error fetching food:", error);
       }
@@ -89,9 +91,8 @@ function DetailsPage() {
               console.log(res.data);
             });
         }
-        const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
-        setReserve(reserve_or_not.data);
       }
+      setReserve(false);
     } else {
       axios
         .post(`/api/reservations`, {
@@ -101,8 +102,8 @@ function DetailsPage() {
           console.log(res.data);
         });
       const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
-      console.log("是否已有資料" + reserve_or_not.data);
-      setReserve(reserve_or_not.data);
+      console.log("已有資料" + reserve_or_not.data);
+      setReserve(true);
     }
   };
 
@@ -144,10 +145,10 @@ function DetailsPage() {
             placeholder="預定數量"
             className="my-3 flex h-10 w-full rounded-md border border-black text-base"
             onChange={(e) => {
-              setReserveCount(e.target.valueAsNumber);
+              setReserveCount(Number(e.target.value));
             }}
             value={reservecount}
-            disabled={reserve}
+            disabled={!reserve}
           />
           {!reserve ? (
             <button

@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     }
     const userId = session.user.id;
 
-    if (!reserve) {
+    if (reserve) {
       const newReservationId = await db.transaction(async (tx) => {
         const [newReservation] = await tx
           .insert(reservationTable)
