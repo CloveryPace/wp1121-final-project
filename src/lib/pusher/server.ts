@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { privateEnv } from "../env/private";
 import { publicEnv } from "../env/public";
 import PusherServer from "pusher";

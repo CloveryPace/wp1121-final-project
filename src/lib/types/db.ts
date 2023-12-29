@@ -12,6 +12,7 @@ export type Event = {
 
 export type Food = {
   id: string;
-  categoryName: string;
-  location: string;
+  name: string;
+  count: number;
+  image: string;
 };
