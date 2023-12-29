@@ -1,7 +1,5 @@
 import NextAuth from "next-auth";
 
-// const handler = NextAuth(options);
-// export { handler as GET, handler as POST };
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
@@ -29,11 +27,9 @@ export const {
         .select({
           id: usersTable.displayId,
           username: usersTable.username,
-          // provider: usersTable.provider,
-          // username: usersTable.username,
         })
         .from(usersTable)
-        .where(eq(usersTable.username, name.toLowerCase()))
+        .where(eq(usersTable.username, name))
         .execute();
       console.log("user", user);
       return {
@@ -41,8 +37,6 @@ export const {
         user: {
           id: user.id,
           username: user.username,
-          // email: user.email,
-          // provider: user.provider,
         },
       };
     },

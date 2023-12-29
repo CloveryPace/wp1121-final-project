@@ -3,9 +3,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { NextResponse } from "next/server";
 
+import Pusher from "pusher";
+
 import { db } from "@/db";
 import { eventsTable, foodTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
+import { privateEnv } from "@/lib/env/private";
+import { publicEnv } from "@/lib/env/public";
 
 export async function POST(request: Request) {
   try {
@@ -47,6 +51,27 @@ export async function POST(request: Request) {
         return newFood.displayId;
       });
     }
+
+    /*
+    // Trigger pusher event
+    const pusher = new Pusher({
+      appId: privateEnv.PUSHER_ID,
+      key: publicEnv.NEXT_PUBLIC_PUSHER_KEY,
+      secret: privateEnv.PUSHER_SECRET,
+      cluster: publicEnv.NEXT_PUBLIC_PUSHER_CLUSTER,
+      useTLS: true,
+    });
+
+    // Private channels are in the format: private-...
+    await pusher.trigger(`private-${updatedDoc.displayId}`, "doc:update", {
+      senderId: userId,
+      document: {
+        id: updatedDoc.displayId,
+        title: updatedDoc.title,
+        content: updatedDoc.content,
+      },
+    });
+    */
 
     console.log("成功");
     return new NextResponse("過去了", { status: 200 });

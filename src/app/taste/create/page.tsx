@@ -43,12 +43,14 @@ function CreatePage() {
     },
   });
 
-  const { register, control, handleSubmit } = form;
+  const { register, control, handleSubmit, formState } = form;
 
   const { fields, append, remove } = useFieldArray({
     name: "taste_info",
     control,
   });
+
+  const { errors } = formState;
 
   const onSubmit = (data: FormValues) => {
     if (!userId) return;
@@ -58,6 +60,16 @@ function CreatePage() {
     });
     router.refresh();
     router.push("/taste");
+  };
+
+  const getTimePlaceholder = () => {
+    const time = new Date();
+    const hour = time.getHours().toString();
+    let minute = time.getMinutes().toString();
+    if (minute.length < 2) {
+      minute = "0" + minute;
+    }
+    return `e.g. ${hour}:${minute}`;
   };
 
   return (
@@ -79,7 +91,13 @@ function CreatePage() {
                 type="text"
                 id="taste-name"
                 className="flex h-10 w-full rounded-md border border-black text-base"
-                {...register(`taste_info.${index}.taste_name` as const)}
+                required
+                {...register(`taste_info.${index}.taste_name` as const, {
+                  required: {
+                    value: true,
+                    message: "必要欄位",
+                  },
+                })}
               />
             </div>
             <div className="w-20" key={field.id}>
@@ -90,8 +108,14 @@ function CreatePage() {
                 type="text"
                 id="taste-count"
                 className="flex h-10 w-full rounded-md border border-black text-base"
+                required
                 // value = {val.count}
-                {...register(`taste_info.${index}.taste_count` as const)}
+                {...register(`taste_info.${index}.taste_count` as const, {
+                  required: {
+                    value: true,
+                    message: "必要欄位",
+                  },
+                })}
               />
             </div>
             <div className="w-20" key={field.id}>
@@ -102,7 +126,13 @@ function CreatePage() {
                   type="file"
                   accept="image/jpeg, image/jpg, image/png"
                   id="taste-photo"
-                  {...register(`taste_info.${index}.taste_photo` as const)}
+                  required
+                  {...register(`taste_info.${index}.taste_photo` as const, {
+                    required: {
+                      value: true,
+                      message: "必要欄位",
+                    },
+                  })}
                 ></input>
                 {/* <div className="h-10 flex items-center justify-center border border-black rounded-md file:text-theme-green cursor-pointer">
                   瀏覽
@@ -164,7 +194,12 @@ function CreatePage() {
               標籤
             </Label>
             <select
-              {...register("taste_category")}
+              {...register("taste_category", {
+                required: {
+                  value: true,
+                  message: "必要欄位",
+                },
+              })}
               id="taste-category"
               className="block h-10 w-full rounded-md border border-black px-2 text-base focus:border-theme-green"
             >
@@ -180,6 +215,9 @@ function CreatePage() {
               <option value="drinks">飲料</option>
               <option value="desserts">甜點</option>
             </select>
+            <p className="pt-0.5 text-xs text-[#C14B25]">
+              {errors.taste_category?.message}
+            </p>
           </div>
           <div className="w-3/5">
             <Label htmlFor="taste-time" className="text-base font-semibold">
@@ -189,8 +227,18 @@ function CreatePage() {
               type="text"
               id="taste-time"
               className="flex h-10 w-4/5 rounded-md border border-black text-base"
-              {...register("taste_time")}
+              {...register("taste_time", {
+                required: {
+                  value: true,
+                  message: "必要欄位",
+                },
+              })}
+              placeholder={getTimePlaceholder()}
+              pattern="\d{2}:\d{2}"
             />
+            <p className="pt-0.5 text-xs text-[#C14B25]">
+              {errors.taste_time?.message}
+            </p>
           </div>
         </div>
         <div>
@@ -201,8 +249,16 @@ function CreatePage() {
             type="text"
             id="taste-place"
             className="flex h-10 w-4/5 rounded-md border border-black text-base"
-            {...register("taste_place")}
+            {...register("taste_place", {
+              required: {
+                value: true,
+                message: "必要欄位",
+              },
+            })}
           />
+          <p className="pt-0.5 text-xs text-[#C14B25]">
+            {errors.taste_place?.message}
+          </p>
         </div>
         <button
           type="submit"

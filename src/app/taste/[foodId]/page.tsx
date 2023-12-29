@@ -1,27 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Oswald } from "next/font/google";
 import Image from "next/image";
+import { useParams } from "next/navigation";
+
+import axios from "axios";
 
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
 });
 
+interface FoodData {
+  id: string;
+  name: string;
+  count: number;
+  event?: {
+    userId: string;
+    location: string;
+    latest_time: string;
+  };
+}
+
 function DetailsPage() {
-  // params: {food.id}
   const [reserve, setReserve] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>("");
+  const [food, setFood] = useState<FoodData | null>(null);
+  const { foodId } = useParams();
+
+  useEffect(() => {
+    const fetchFood = async () => {
+      try {
+        const response = await axios.get(`/api/foods/${foodId}`);
+        setFood(response.data);
+      } catch (error) {
+        console.error("Error fetching food:", error);
+      }
+    };
+
+    fetchFood();
+  }, [foodId]);
+
+  axios
+    .get("/api/user")
+    .then((res) => {
+      console.log(res.data);
+      setUsername(res.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 
   return (
     <div className="mx-4 flex h-screen w-full flex-col space-y-6 px-24 py-6">
       <div className="mt-24 flex h-10 items-end justify-start space-x-6">
-        <div className="select-none text-4xl">餐點名稱</div>
+        <div className="select-none text-3xl">{food?.name}</div>
         <div className={oswald.className}>
           {/* 從 foodTable 連到 eventTable 再連到 user */}
           <div className="mb-0.5 cursor-pointer select-none text-lg">
-            @username
+            @{username}
           </div>
         </div>
       </div>
@@ -39,9 +78,9 @@ function DetailsPage() {
         <div className="flex flex-col">
           <hr className="mb-8 h-0.5 border-0 bg-gray-300"></hr>
           <div className="flex select-none flex-col space-y-6">
-            <div className="text-xl">數量：1</div>
-            <div className="text-xl">取餐地點：臺灣大學</div>
-            <div className="text-xl">最後取餐時間：21:00</div>
+            <div className="text-xl">數量：{food?.count}</div>
+            <div className="text-xl">取餐時間：{food?.event?.latest_time}</div>
+            <div className="text-xl">取餐地點：{food?.event?.location}</div>
           </div>
           <hr className="my-8 mb-16 h-0.5 border-0 bg-gray-300"></hr>
           {reserve ? (
