@@ -23,7 +23,7 @@ export async function FoodList({ eng, chi }: CategoryProps) {
   if (food?.length === 0) return;
   return (
     <div className="mx-12 flex flex-col space-y-4">
-      <p className="text-lg">{chi}</p>
+      <p className="select-none text-2xl">{chi}</p>
       <div className="no-scrollbar flex space-x-4 overflow-x-scroll">
         {food?.map((item, i) => {
           if (item.count > 0) {
