@@ -2,7 +2,7 @@
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
-import { foodTable, reservationTable } from "@/db/schema";
+import { foodTable, reservationTable, eventsTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 const getReservations = async () => {
@@ -28,14 +28,16 @@ const getReservations = async () => {
       .select({
         userId: reservationTable.userId,
         foodId: reservationTable.foodId,
-        count: reservationTable.count,
-        createdAt: reservationTable.createdAt,
+        count: reservationTable.count, //預定數量
+        createdAt: reservationTable.createdAt, //預定時間
         name: foodTable.name,
         image: foodTable.image,
+        location: eventsTable.location,
       })
       .from(reservationTable)
       .where(eq(reservationTable.userId, userId))
       .leftJoin(foodSubquery, eq(foodTable.displayId, reservationTable.foodId))
+      .leftJoin(eventsTable, eq(eventsTable.displayId, foodTable.eventId))
       .execute();
 
     return reserve_food;

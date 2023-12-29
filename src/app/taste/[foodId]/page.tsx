@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -7,6 +8,10 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
 import axios from "axios";
+
+import { Input } from "@/components/ui/input";
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 const oswald = Oswald({
   weight: "300",
@@ -28,6 +33,8 @@ function DetailsPage() {
   const router = useRouter();
   const [reserve, setReserve] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
+  const [foodCount, setFoodCount] = useState<number | undefined>(0);
+  const [reservecount, setReserveCount] = useState<number>(0);
   const [food, setFood] = useState<FoodData | null>(null);
   const { foodId } = useParams();
 
@@ -36,12 +43,19 @@ function DetailsPage() {
       try {
         const response = await axios.get(`/api/foods/${foodId}`);
         setFood(response.data);
+        setFoodCount(food?.count);
+        console.log(foodCount);
+        // 查看user是否已經預定過
+        // 若預定過了就disable按鈕
+        const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
+        setReserve(reserve_or_not.data);
+        console.log(reserve);
       } catch (error) {
         console.error("Error fetching food:", error);
       }
     };
     fetchFood();
-  }, [foodId]);
+  }, [foodId, food?.count, foodCount, reserve, setReserve]);
 
   axios
     .get("/api/user")
@@ -55,6 +69,41 @@ function DetailsPage() {
 
   const handleClick = () => {
     router.push("/taste/myfood");
+  };
+
+  const data = { reserve, foodId, reservecount, foodCount };
+
+  const handleResClick = async () => {
+    if (reserve) {
+      if (food === null) {
+        console.log("food is null");
+      } else {
+        if (food.count < reservecount) {
+          alert("剩餘數量不足");
+        } else {
+          axios
+            .post("/api/reservations", {
+              ...data,
+            })
+            .then((res) => {
+              console.log(res.data);
+            });
+        }
+        const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
+        setReserve(reserve_or_not.data);
+      }
+    } else {
+      axios
+        .post(`/api/reservations`, {
+          ...data,
+        })
+        .then((res) => {
+          console.log(res.data);
+        });
+      const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
+      console.log("是否已有資料" + reserve_or_not.data);
+      setReserve(reserve_or_not.data);
+    }
   };
 
   return (
@@ -89,20 +138,30 @@ function DetailsPage() {
             <div className="text-xl">取餐時間：{food?.event?.latest_time}</div>
             <div className="text-xl">取餐地點：{food?.event?.location}</div>
           </div>
-          <hr className="my-8 mb-16 h-0.5 border-0 bg-gray-300"></hr>
-          {reserve ? (
+          <hr className="my-6 mb-16 h-0.5 border-0 bg-gray-300"></hr>
+          <Input
+            type="number"
+            placeholder="預定數量"
+            className="my-3 flex h-10 w-full rounded-md border border-black text-base"
+            onChange={(e) => {
+              setReserveCount(e.target.valueAsNumber);
+            }}
+            value={reservecount}
+            disabled={reserve}
+          />
+          {!reserve ? (
             <button
               className="focus:shadow-outline min-w-[100px] rounded rounded-xl bg-gray-300 bg-opacity-80 px-4 py-2 text-xl font-semibold text-gray-500 hover:bg-opacity-70 focus:outline-none"
               type="button"
-              onClick={() => setReserve(false)}
+              onClick={handleResClick}
             >
-              已預訂
+              已預訂。再按一次以取消預定
             </button>
           ) : (
             <button
               className="focus:shadow-outline min-w-[100px] rounded rounded-xl bg-lime-700 bg-opacity-80 px-4 py-2 text-xl font-semibold text-white hover:bg-opacity-70 focus:outline-none"
               type="button"
-              onClick={() => setReserve(true)}
+              onClick={handleResClick}
             >
               預訂
             </button>

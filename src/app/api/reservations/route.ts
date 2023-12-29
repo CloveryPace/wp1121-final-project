@@ -1,53 +1,92 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
-import { eventsTable, foodTable, reservationTable } from "@/db/schema";
+import { foodTable, reservationTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
+import { privateEnv } from "@/lib/env/private";
+import { publicEnv } from "@/lib/env/public";
 
-export async function GET() {
+// 預定新增&刪除
+export async function POST(request: Request) {
   try {
+    const body = await request.json();
+    const { reserve, foodId, reservecount, foodCount } = body;
+
     const session = await auth();
     if (!session || !session?.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
     const userId = session.user.id;
-    console.log(userId);
 
-    const foodSubquery = db.$with("food_subquery").as(
-      db
-        .select({
-          foodId: foodTable.displayId,
-          name: foodTable.name,
-          image: foodTable.image,
+    if (!reserve) {
+      const newReservationId = await db.transaction(async (tx) => {
+        const [newReservation] = await tx
+          .insert(reservationTable)
+          .values({
+            userId: userId,
+            foodId: foodId,
+            count: reservecount,
+          })
+          .returning();
+        return newReservation.id;
+      });
+
+      // 更新食物數量
+      await db
+        .update(foodTable)
+        .set({
+          count: foodCount - reservecount,
         })
-        .from(foodTable),
-    );
+        .where(eq(foodTable.displayId, foodId));
 
-    const reserve_food = await db
-      .with(foodSubquery)
-      .select({
-        userId: reservationTable.userId,
-        foodId: reservationTable.foodId,
-        count: reservationTable.count,
-        createdAt: reservationTable.createdAt,
-        name: foodTable.name,
-        image: foodTable.image,
-      })
-      .from(reservationTable)
-      .where(eq(reservationTable.userId, userId))
-      .leftJoin(foodSubquery, eq(foodTable.displayId, reservationTable.foodId))
-      .execute();
+      console.log("成功預訂");
+    } else {
+      // 刪除預定
+      await db
+        .delete(reservationTable)
+        .where(eq(reservationTable.userId, userId));
 
-    return NextResponse.json(reserve_food, { status: 200 });
-  } catch (error) {
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
-    );
+      // 更新食物數量（把取消預定的加回來）
+      await db
+        .update(foodTable)
+        .set({
+          count: foodCount + reservecount,
+        })
+        .where(eq(foodTable.displayId, foodId));
+
+      console.log("成功刪除預定");
+    }
+
+    /*
+    // Trigger pusher event
+    const pusher = new Pusher({
+      appId: privateEnv.PUSHER_ID,
+      key: publicEnv.NEXT_PUBLIC_PUSHER_KEY,
+      secret: privateEnv.PUSHER_SECRET,
+      cluster: publicEnv.NEXT_PUBLIC_PUSHER_CLUSTER,
+      useTLS: true,
+    });
+
+    // Private channels are in the format: private-...
+    await pusher.trigger(`private-${updatedDoc.displayId}`, "doc:update", {
+      senderId: userId,
+      document: {
+        id: updatedDoc.displayId,
+        title: updatedDoc.title,
+        content: updatedDoc.content,
+      },
+    });
+    */
+
+    console.log("成功");
+    return new NextResponse("預定route", { status: 200 });
+  } catch (error: any) {
+    console.log(error, "ERROR_MESSAGES in reservations/route");
+    return new NextResponse("過不去", { status: 500 });
   }
 }
