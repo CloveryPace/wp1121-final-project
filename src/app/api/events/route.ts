@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 import Pusher from "pusher";
@@ -11,14 +10,8 @@ import { eventsTable, foodTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { privateEnv } from "@/lib/env/private";
 import { publicEnv } from "@/lib/env/public";
-import { pusherServer } from "@/lib/pusher/server";
-import type { User, Food } from "@/lib/types/db";
 
-type PusherPayload = {
-  foodId: Food["id"];
-  userId: User["id"];
-};
-
+// 新增event時，會通知pusher
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -59,6 +52,23 @@ export async function POST(request: Request) {
         return newFood.displayId;
       });
     }
+
+    // Trigger pusher event
+    const pusher = new Pusher({
+      appId: privateEnv.PUSHER_ID,
+      key: publicEnv.NEXT_PUBLIC_PUSHER_KEY,
+      secret: privateEnv.PUSHER_SECRET,
+      cluster: publicEnv.NEXT_PUBLIC_PUSHER_CLUSTER,
+      useTLS: true,
+    });
+
+    // Private channels are in the format: private-...
+    await pusher.trigger(`newEvent-${newEventId}`, "event:update", {
+      senderId: userId,
+      event: {
+        id: newEventId,
+      },
+    });
 
     console.log("成功");
     return new NextResponse("過去了", { status: 200 });

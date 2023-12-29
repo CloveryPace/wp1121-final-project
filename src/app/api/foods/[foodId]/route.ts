@@ -63,6 +63,7 @@ export async function GET(
 }
 
 // PUT /api/foods/:foodId
+// 更新food時，會通知pusher
 export async function PUT(
   req: NextRequest,
   { params }: { params: { foodId: string } },

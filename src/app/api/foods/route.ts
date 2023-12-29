@@ -29,7 +29,7 @@ export async function GET(
     }
 
     // Get the food
-    const dbFood = await db
+    const [dbFood] = await db
       .select({
         foodId: foodTable.displayId,
         count: foodTable.count,
@@ -44,9 +44,17 @@ export async function GET(
       return NextResponse.json({ error: "Food Not Found" }, { status: 404 });
     }
 
+    const foodId = dbFood.foodId;
+    const count = dbFood.count;
+    const name = dbFood.name;
+    const image = dbFood.image;
+
     return NextResponse.json(
       {
-        dbFood,
+        id: foodId,
+        name: name,
+        count: count,
+        image: image,
       },
       { status: 200 },
     );

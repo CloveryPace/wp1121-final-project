@@ -13,6 +13,7 @@ type PusherPayload = {
   food: Food;
 };
 
+// 用來更新food數量（引入api：更新時會通知pusher）
 export const useFood = () => {
   const { foodId } = useParams();
   const foodID = Array.isArray(foodId) ? foodId[0] : foodId;
