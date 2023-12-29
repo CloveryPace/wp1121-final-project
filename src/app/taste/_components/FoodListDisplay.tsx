@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 // import { redirect } from "next/navigation";
-import { getFood, getFoodByUserId } from "@/app/actions/getFood";
+import { getFoodByUserId, getFoodByCategory } from "@/app/actions/getFood";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // import { useState, useEffect } from "react";
@@ -12,12 +12,18 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // import { auth } from "@/lib/auth";
 // import { publicEnv } from "@/lib/env/public";
 
-// params = category: string
-export async function FoodList() {
-  const food = await getFood();
+type CategoryProps = {
+  eng: string;
+  chi: string;
+};
+
+export async function FoodList({ eng, chi }: CategoryProps) {
+  // const food = await getFood();
+  const food = await getFoodByCategory(eng);
+  if (food?.length === 0) return;
   return (
     <div className="mx-12 flex flex-col space-y-4">
-      <p className="text-lg">Category</p>
+      <p className="text-lg">{chi}</p>
       <div className="no-scrollbar flex space-x-4 overflow-x-scroll">
         {food?.map((item, i) => {
           if (item.count > 0) {

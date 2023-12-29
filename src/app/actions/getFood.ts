@@ -52,3 +52,25 @@ export const getFoodByUserId = async (userId: { userId: string }) => {
     return null;
   }
 };
+
+export const getFoodByCategory = async (category: string) => {
+  try {
+    const food = await db
+      .select({
+        food_id: foodTable.displayId,
+        name: foodTable.name,
+        count: foodTable.count,
+        image: foodTable.image,
+        time: eventsTable.latest_time,
+        place: eventsTable.location,
+      })
+      .from(foodTable)
+      .leftJoin(eventsTable, eq(foodTable.eventId, eventsTable.displayId))
+      .where(eq(eventsTable.categoryName, category))
+      .execute();
+
+    return food;
+  } catch (error: any) {
+    return null;
+  }
+};

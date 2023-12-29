@@ -13,10 +13,24 @@ async function TastePage() {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
 
+  // const categories = ["臺式", "中式", "西式", "日式", "韓式", "早餐", "飲料", "甜點"];
+  // const categories = ["taiwanese", "chinese", "western", "japanese", "korean", "breakfast", "drinks", "desserts"];
+  const categories = {
+    taiwanese: "臺式",
+    chinese: "中式",
+    western: "西式",
+    japanese: "日式",
+    korean: "韓式",
+    breakfast: "早餐",
+    drinks: "飲料",
+    desserts: "甜點",
+  };
+
   return (
     <div className="no-scrollbar my-32 h-96 w-full space-y-12 overflow-y-scroll">
-      <FoodList />
-      <FoodList />
+      {Object.entries(categories).map(([eng, chi]) => (
+        <FoodList eng={eng} chi={chi} key={eng} />
+      ))}
     </div>
   );
 }
