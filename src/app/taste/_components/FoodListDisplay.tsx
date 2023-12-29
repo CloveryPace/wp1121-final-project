@@ -2,8 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 // import { redirect } from "next/navigation";
-import getFood from "@/app/actions/getFood";
-import getFoodByUserId from "@/app/actions/getFoodByUserId";
+import { getFood, getFoodByUserId } from "@/app/actions/getFood";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 // import { auth } from "@/lib/auth";

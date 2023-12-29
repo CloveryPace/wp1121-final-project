@@ -6,7 +6,7 @@ import { eventsTable, foodTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 // 取得所有food，顯示在/taste畫面
-const getFood = async () => {
+export const getFood = async () => {
   try {
     const session = await auth();
     if (!session || !session?.user?.id) {
@@ -41,4 +41,24 @@ const getFood = async () => {
   }
 };
 
-export default getFood;
+export const getFoodByUserId = async (userId: { userId: string }) => {
+  try {
+    const food = await db
+      .select({
+        food_id: foodTable.displayId,
+        name: foodTable.name,
+        count: foodTable.count,
+        image: foodTable.image,
+        time: eventsTable.latest_time,
+        place: eventsTable.location,
+      })
+      .from(foodTable)
+      .leftJoin(eventsTable, eq(foodTable.eventId, eventsTable.displayId))
+      .where(eq(eventsTable.userId, userId.userId))
+      .execute();
+
+    return food;
+  } catch (error: any) {
+    return null;
+  }
+};
