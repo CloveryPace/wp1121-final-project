@@ -5,6 +5,10 @@ import Link from "next/link";
 import { getFood, getFoodByUserId } from "@/app/actions/getFood";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+// import { useState, useEffect } from "react";
+
+// import axios from "axios";
+
 // import { auth } from "@/lib/auth";
 // import { publicEnv } from "@/lib/env/public";
 

@@ -27,7 +27,7 @@ interface FoodData {
 function DetailsPage() {
   const router = useRouter();
   const [reserve, setReserve] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>("");
+  const [creatorname, setCreatorname] = useState<string>("");
   const [food, setFood] = useState<FoodData | null>(null);
   const { foodId } = useParams();
 
@@ -44,17 +44,17 @@ function DetailsPage() {
   }, [foodId]);
 
   axios
-    .get("/api/user")
+    .get(`/api/user/${food?.event?.userId}`)
     .then((res) => {
       console.log(res.data);
-      setUsername(res.data);
+      setCreatorname(res.data);
     })
     .catch((error) => {
       console.log(error);
     });
 
   const handleClick = () => {
-    router.push("/taste/myfood");
+    router.push(`/taste/user/${food?.event?.userId}`);
   };
 
   return (
@@ -67,7 +67,7 @@ function DetailsPage() {
             className="mb-0.5 cursor-pointer select-none text-lg"
             onClick={() => handleClick()}
           >
-            @{username}
+            @{creatorname}
           </div>
         </div>
       </div>

@@ -12,16 +12,6 @@ export const getFood = async () => {
     if (!session || !session?.user?.id) {
       return null;
     }
-    // const food = await db
-    //   .select({
-    //     food_id: foodTable.displayId,
-    //     name: foodTable.name,
-    //     count: foodTable.count,
-    //     image: foodTable.image,
-    //   })
-    //   .from(foodTable)
-    //   .execute();
-
     const food = await db
       .select({
         food_id: foodTable.displayId,

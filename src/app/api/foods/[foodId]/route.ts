@@ -49,7 +49,7 @@ export async function GET(
   });
 
   if (!dbFood) {
-    return NextResponse.json({ error: "Doc Not Found" }, { status: 404 });
+    return NextResponse.json({ error: "Food Not Found" }, { status: 404 });
   }
 
   try {

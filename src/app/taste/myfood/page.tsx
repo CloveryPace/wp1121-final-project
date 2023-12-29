@@ -5,7 +5,7 @@ import { MyFoodList } from "../_components/FoodListDisplay";
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
 
-async function TastePage() {
+async function MyFoodPage() {
   const session = await auth();
 
   // new
@@ -21,4 +21,4 @@ async function TastePage() {
     </div>
   );
 }
-export default TastePage;
+export default MyFoodPage;
