@@ -49,7 +49,7 @@ function Navbar() {
         <div
           className="cursor-pointer select-none px-10 text-4xl"
           onClick={() => {
-            router.push("/");
+            router.push("/taste");
           }}
         >
           NewTaste
@@ -111,7 +111,13 @@ function Navbar() {
             <DropdownMenuContent className="p-5">
               <DropdownMenuLabel>@{username}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>我的餐點</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  router.push("/taste/myfood");
+                }}
+              >
+                我的餐點
+              </DropdownMenuItem>
               <DropdownMenuItem>我的訂單</DropdownMenuItem>
               <DropdownMenuSeparator />
               <Link href={`/auth/signout`}>

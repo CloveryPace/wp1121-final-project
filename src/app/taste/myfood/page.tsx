@@ -1,9 +1,9 @@
 import { redirect } from "next/navigation";
 
+import { MyFoodList } from "../_components/FoodListDisplay";
+
 import { auth } from "@/lib/auth";
 import { publicEnv } from "@/lib/env/public";
-
-import { FoodList } from "./_components/FoodListDisplay";
 
 async function TastePage() {
   const session = await auth();
@@ -12,11 +12,12 @@ async function TastePage() {
   if (!session || !session?.user) {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
+  const userId = session.user.id;
 
   return (
     <div className="no-scrollbar my-32 h-96 w-full space-y-12 overflow-y-scroll">
-      <FoodList />
-      <FoodList />
+      <MyFoodList userId={userId} />
+      <MyFoodList userId={userId} />
     </div>
   );
 }
