@@ -6,7 +6,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
-import { foodTable, reservationTable } from "@/db/schema";
+import { eventsTable, foodTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 export async function GET() {
@@ -18,32 +18,34 @@ export async function GET() {
     const userId = session.user.id;
     console.log(userId);
 
-    const foodSubquery = db.$with("food_subquery").as(
+    const eventSubquery = db.$with("event_subquery").as(
       db
         .select({
-          foodId: foodTable.displayId,
-          name: foodTable.name,
-          image: foodTable.image,
+          displayId: eventsTable.displayId,
+          latest_time: eventsTable.latest_time,
+          categoryName: eventsTable.categoryName,
+          location: eventsTable.location,
         })
-        .from(foodTable),
+        .from(eventsTable)
+        .where(eq(eventsTable.userId, userId)),
     );
 
-    const reserve_food = await db
-      .with(foodSubquery)
+    const my_food = await db
+      .with(eventSubquery)
       .select({
-        userId: reservationTable.userId,
-        foodId: reservationTable.foodId,
-        count: reservationTable.count,
-        createdAt: reservationTable.createdAt,
+        foodId: foodTable.displayId,
+        latest_time: eventSubquery.latest_time,
+        categoryName: eventSubquery.categoryName,
+        location: eventSubquery.location,
+        count: foodTable.count,
         name: foodTable.name,
         image: foodTable.image,
       })
-      .from(reservationTable)
-      .where(eq(reservationTable.userId, userId))
-      .leftJoin(foodSubquery, eq(foodTable.displayId, reservationTable.foodId))
+      .from(foodTable)
+      .leftJoin(eventSubquery, eq(eventSubquery.displayId, foodTable.eventId))
       .execute();
 
-    return NextResponse.json(reserve_food, { status: 200 });
+    return NextResponse.json(my_food, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Internal Server Error" },
