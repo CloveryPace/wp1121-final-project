@@ -33,7 +33,7 @@ export async function FoodList({ eng, chi }: CategoryProps) {
                 key={i}
               >
                 <Link href={`/taste/${item.food_id}`}>
-                  <CardHeader className="max-h-32">
+                  <CardHeader className="max-h-28 min-h-24 items-center">
                     <Image
                       src="/potato-salad.svg"
                       alt="food"
@@ -46,6 +46,7 @@ export async function FoodList({ eng, chi }: CategoryProps) {
                         borderRadius: "12px 12px 0 0",
                       }}
                       priority
+                      // className="my-auto"
                     />
                   </CardHeader>
                   <CardContent className="no-scrollbar h-2/5 overflow-y-scroll">
@@ -68,13 +69,12 @@ export async function MyFoodList(userId: { userId: string }) {
   const food = await getFoodByUserId(userId);
   return (
     <div className="mx-12 flex flex-col space-y-4">
-      <p className="text-lg">Category</p>
-      <div className="no-scrollbar flex space-x-4 overflow-x-scroll">
+      <div className="grid grid-cols-4">
         {food?.map((item, i) => {
           if (item.count > 0) {
             return (
               <Card
-                className="h-64 w-48 shrink-0 cursor-pointer select-none"
+                className="h-64 w-64 shrink-0 cursor-pointer select-none"
                 key={i}
               >
                 <Link href={`/taste/${item.food_id}`}>
