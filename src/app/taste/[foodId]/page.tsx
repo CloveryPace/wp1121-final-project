@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 import { Oswald } from "next/font/google";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import axios from "axios";
 
@@ -25,6 +25,7 @@ interface FoodData {
 }
 
 function DetailsPage() {
+  const router = useRouter();
   const [reserve, setReserve] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [food, setFood] = useState<FoodData | null>(null);
@@ -53,13 +54,20 @@ function DetailsPage() {
       console.log(error);
     });
 
+  const handleClick = () => {
+    router.push("/taste/myfood");
+  };
+
   return (
     <div className="mx-4 flex h-screen w-full flex-col space-y-6 px-24 py-6">
       <div className="mt-24 flex h-10 items-end justify-start space-x-6">
         <div className="select-none text-3xl">{food?.name}</div>
         <div className={oswald.className}>
           {/* 從 foodTable 連到 eventTable 再連到 user */}
-          <div className="mb-0.5 cursor-pointer select-none text-lg">
+          <div
+            className="mb-0.5 cursor-pointer select-none text-lg"
+            onClick={() => handleClick()}
+          >
             @{username}
           </div>
         </div>
