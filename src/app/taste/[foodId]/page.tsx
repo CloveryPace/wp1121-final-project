@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
@@ -37,6 +39,7 @@ function DetailsPage() {
   const [username, setUsername] = useState<string>("");
   const [foodCount, setFoodCount] = useState<number | undefined>(0);
   const [reservecount, setReserveCount] = useState<number>(0);
+  const [creatorname, setCreatorname] = useState<string>("");
   const [food, setFood] = useState<FoodData | null>(null);
   const { foodId } = useParams();
 
@@ -60,17 +63,17 @@ function DetailsPage() {
   }, [foodId, food?.count, foodCount, reserve, setReserve]);
 
   axios
-    .get("/api/user")
+    .get(`/api/user/${food?.event?.userId}`)
     .then((res) => {
       console.log(res.data);
-      setUsername(res.data);
+      setCreatorname(res.data);
     })
     .catch((error) => {
       console.log(error);
     });
 
   const handleClick = () => {
-    router.push("/taste/myfood");
+    router.push(`/taste/user/${food?.event?.userId}`);
   };
 
   const data = { reserve, foodId, reservecount, foodCount };
@@ -117,7 +120,7 @@ function DetailsPage() {
             className="mb-0.5 cursor-pointer select-none text-lg"
             onClick={() => handleClick()}
           >
-            @{username}
+            @{creatorname}
           </div>
         </div>
       </div>

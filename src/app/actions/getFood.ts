@@ -12,16 +12,6 @@ export const getFood = async () => {
     if (!session || !session?.user?.id) {
       return null;
     }
-    // const food = await db
-    //   .select({
-    //     food_id: foodTable.displayId,
-    //     name: foodTable.name,
-    //     count: foodTable.count,
-    //     image: foodTable.image,
-    //   })
-    //   .from(foodTable)
-    //   .execute();
-
     const food = await db
       .select({
         food_id: foodTable.displayId,
@@ -74,16 +64,34 @@ export const getResFoodByUserId = async (userId: { userId: string }) => {
         count: reservationTable.count, //預定數量
         foodId: reservationTable.foodId,
         name: foodTable.name,
-        image: foodTable.image,
-        time: eventsTable.latest_time,
-        place: eventsTable.location,
       })
       .from(reservationTable)
       .leftJoin(foodTable, eq(foodTable.displayId, reservationTable.foodId))
       .leftJoin(eventsTable, eq(eventsTable.displayId, foodTable.eventId))
       .where(eq(foodTable.displayId, userId.userId))
       .execute();
+    return food;
+  } catch (error: any) {
+    return null;
+  }
+};
 
+export const getFoodByCategory = async (category: string) => {
+  try {
+    const food = await db
+      .select({
+        food_id: foodTable.displayId,
+        name: foodTable.name,
+        count: foodTable.count,
+
+        image: foodTable.image,
+        time: eventsTable.latest_time,
+        place: eventsTable.location,
+      })
+      .from(foodTable)
+      .leftJoin(eventsTable, eq(foodTable.eventId, eventsTable.displayId))
+      .where(eq(eventsTable.categoryName, category))
+      .execute();
     return food;
   } catch (error: any) {
     return null;
