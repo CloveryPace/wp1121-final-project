@@ -28,7 +28,6 @@ export const {
         .from(usersTable)
         .where(eq(usersTable.username, name))
         .execute();
-      console.log("user", user);
       return {
         ...session,
         user: {
