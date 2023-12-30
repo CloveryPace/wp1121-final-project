@@ -3,7 +3,6 @@
 
 import { useState, useEffect } from "react";
 
-import { Oswald } from "next/font/google";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
@@ -13,10 +12,7 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-const oswald = Oswald({
-  weight: "300",
-  subsets: ["latin"],
-});
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 interface FoodData {
   id: string;
@@ -117,13 +113,11 @@ function DetailsPage() {
     <div className="flex h-screen w-full flex-col space-y-6 px-24 py-6">
       <div className="mt-24 flex h-10 items-end justify-start space-x-6">
         <div className="select-none text-3xl">{food?.name}</div>
-        <div className={oswald.className}>
-          <div
-            className="mb-0.5 cursor-pointer select-none text-lg"
-            onClick={() => handleClick()}
-          >
-            @{creatorname}
-          </div>
+        <div
+          className="mb-0.5 cursor-pointer select-none text-lg"
+          onClick={() => handleClick()}
+        >
+          @{creatorname}
         </div>
       </div>
       {/* flex justify-start space-x-24 */}
