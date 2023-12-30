@@ -25,6 +25,8 @@ import { pusherClient } from "@/lib/pusher/client";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 interface FoodData {
   id: string;
   name: string;
@@ -148,8 +150,8 @@ function DetailsPage() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col space-y-6 px-24 py-6">
-      <div className="mt-24 flex h-10 items-end justify-start space-x-6">
+    <div className="no-scrollbar my-32 h-screen w-full space-y-12 overflow-y-scroll px-24 pb-32">
+      <div className="flex h-10 items-end justify-start space-x-6">
         <div className="select-none text-3xl">{food?.name}</div>
         <div
           className="mb-0.5 cursor-pointer select-none text-lg"
@@ -159,16 +161,18 @@ function DetailsPage() {
         </div>
       </div>
       {/* flex justify-start space-x-24 */}
-      <div className="grid grid-cols-2 items-center gap-24">
-        <Image
-          src={food?.image?.replace(/['"]+/g, "") || "/potato-salad.svg"}
-          alt="food"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
-          priority
-        />
+      <div className="grid h-screen grid-cols-2 items-center gap-24">
+        <div className="no-scrollbar h-screen overflow-y-scroll">
+          <Image
+            src={food?.image?.replace(/['"]+/g, "") || "/potato-salad.svg"}
+            alt="food"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+            priority
+          />
+        </div>
         <div className="flex flex-col">
           <hr className="mb-8 h-0.5 border-0 bg-gray-300"></hr>
           <div className="flex select-none flex-col space-y-6">
