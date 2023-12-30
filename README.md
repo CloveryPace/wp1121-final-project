@@ -1,26 +1,4 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Web Programming Group 18 Final Project - NewTaste
 
 # Run the project
 
@@ -28,7 +6,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
    ```bash
    yarn
    ```
-2. Create `.env.local` and copy `.env.example` to `.env.local`
+2. Get Pusher credentials
+   Please refer to the [Pusher Setup](#pusher-setup) section for more details.
+
+3. Get Cloundinary assets
+   Follow the instruction in https://youtu.be/PGPGcKBpAk8?t=17549 to get cloundinary cloud name and cloud preset.
+
+4. Create `.env.local` and copy `.env.example` to `.env.local`. Add the following content:
 
    ```text
     POSTGRES_URL=postgres://postgres:postgres@localhost:5432/leftover
@@ -38,23 +22,23 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
     PUSHER_SECRET=
     NEXT_PUBLIC_PUSHER_CLUSTER=
 
-    AUTH_SECRET=
-    AUTH_GITHUB_ID=
-    AUTH_GITHUB_SECRET=
+    AUTH_SECRET=RANDOM_STRING_2
 
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+    NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET=
 
     NEXT_PUBLIC_BASE_URL=http://localhost:3000
    ```
 
-3. Start the database
+5. If you wish to use docker to build a postgresql Start the database
    ```bash
    docker compose up -d
    ```
-4. Run migrations
+6. Run migrations
    ```bash
    yarn migrate
    ```
-5. Start the development server
+7. Start the development server
    ```bash
    yarn dev
    ```

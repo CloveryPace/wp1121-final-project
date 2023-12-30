@@ -1,4 +1,0 @@
-- 確認db schema 可以migrate無錯誤
-- 確認啥時是action啥是api
-- 合併hook跟api
-- 串到前端
