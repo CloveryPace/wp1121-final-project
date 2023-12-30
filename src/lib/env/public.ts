@@ -3,7 +3,7 @@ import { z } from "zod";
 const publicEnvSchema = z.object({
   NEXT_PUBLIC_PUSHER_KEY: z.string(),
   NEXT_PUBLIC_PUSHER_CLUSTER: z.string(),
-  NEXT_PUBLIC_BASE_URL: z.string().url(),
+  NEXT_PUBLIC_BASE_URL: z.string(),
   NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET: z.string(),
 });
 
