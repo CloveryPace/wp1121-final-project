@@ -129,7 +129,10 @@ export async function ReservationList() {
                 <Link href={`/taste/${item.foodId}`}>
                   <CardHeader className="max-h-36 min-h-28">
                     <Image
-                      src="/potato-salad.svg"
+                      src={
+                        item?.image?.replace(/['"]+/g, "") ||
+                        "/potato-salad.svg"
+                      }
                       alt="food"
                       width={0}
                       height={0}
