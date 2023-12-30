@@ -92,6 +92,7 @@ function Navbar() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyPress}
+                autoFocus
                 className="h-8 rounded-md border border-black text-base"
               />
             </ClickAwayListener>

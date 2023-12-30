@@ -13,8 +13,6 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
@@ -36,7 +34,7 @@ function DetailsPage() {
   const [reserve, setReserve] = useState<boolean>(false);
   const [prevCount, setPrevCount] = useState<number | undefined>(0);
   const [foodCount, setFoodCount] = useState<number | undefined>(0);
-  const [reservecount, setReserveCount] = useState<number>(0);
+  const [reservecount, setReserveCount] = useState<number>(1);
   const [creatorname, setCreatorname] = useState<string>("");
   const [food, setFood] = useState<FoodData | null>(null);
   const { foodId } = useParams();
@@ -48,8 +46,8 @@ function DetailsPage() {
         setFood(response.data);
         setFoodCount(food?.count);
         console.log("食物剩餘數量" + foodCount);
-        // 查看user是否已經預定過
-        // 若預定過了就disable按鈕
+        // 查看user是否已經預訂過
+        // 若預訂過了就disable按鈕
         const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
         console.log(JSON.parse(reserve_or_not.data));
         setReserve(reserve_or_not.data);
@@ -89,7 +87,7 @@ function DetailsPage() {
         console.log("food is null");
       } else {
         if (food.count < reservecount || reservecount <= 0) {
-          alert("預定數量錯誤");
+          alert("預訂數量錯誤");
         } else {
           axios
             .post("/api/reservations", {
