@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { getFoodByUserId, getFoodByCategory } from "@/app/actions/getFood";
-import getReservation from "@/app/actions/getReservations";
+import getReservations from "@/app/actions/getReservations";
 import getUsername from "@/app/actions/getUsername";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -107,12 +107,13 @@ export async function UserFoodList(userId: { userId: string }) {
 }
 
 export async function ReservationList() {
-  const food = await getReservation();
+  const food = await getReservations();
+  console.log("預定食物");
+  console.log(food);
   return (
     <div className="mx-12 flex flex-col space-y-4">
-      <p className="text-lg">Category</p>
       <div className="no-scrollbar flex space-x-4 overflow-x-scroll">
-        {food?.map((item, i) => {
+        {food?.map((item: any, i: any) => {
           if (item.count > 0) {
             return (
               <Card
@@ -138,7 +139,6 @@ export async function ReservationList() {
                   <CardContent className="no-scrollbar h-2/5 overflow-y-scroll">
                     <CardTitle>{item.name}</CardTitle>
                     <div>預定數量：{item.count}</div>
-                    <div>預定時間：{JSON.stringify(item.createdAt)}</div>
                     <div>取餐地點：{item.location}</div>
                   </CardContent>
                 </Link>

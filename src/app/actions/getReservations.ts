@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { eq } from "drizzle-orm";
 
 import { db } from "@/db";
-import { foodTable, reservationTable, eventsTable } from "@/db/schema";
+import { eventsTable, foodTable, reservationTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 const getReservations = async () => {
@@ -11,20 +13,10 @@ const getReservations = async () => {
     if (!session || !session?.user?.id) {
       return null;
     }
+
     const userId = session.user.id;
 
-    const foodSubquery = db.$with("food_subquery").as(
-      db
-        .select({
-          foodId: foodTable.displayId,
-          name: foodTable.name,
-          image: foodTable.image,
-        })
-        .from(foodTable),
-    );
-
     const reserve_food = await db
-      .with(foodSubquery)
       .select({
         userId: reservationTable.userId,
         foodId: reservationTable.foodId,
@@ -35,9 +27,9 @@ const getReservations = async () => {
         location: eventsTable.location,
       })
       .from(reservationTable)
-      .where(eq(reservationTable.userId, userId))
-      .leftJoin(foodSubquery, eq(foodTable.displayId, reservationTable.foodId))
+      .leftJoin(foodTable, eq(foodTable.displayId, reservationTable.foodId))
       .leftJoin(eventsTable, eq(eventsTable.displayId, foodTable.eventId))
+      .where(eq(reservationTable.userId, userId))
       .execute();
 
     return reserve_food;
