@@ -5,7 +5,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 // import { HiPhoto } from "react-icons/hi2";
 import { useSession } from "next-auth/react";
 import { CldUploadButton } from "next-cloudinary";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 
 import axios from "axios";
 
@@ -28,7 +28,10 @@ type FormValues = {
 
 function CreatePage() {
   const { data: session } = useSession();
-  const userId = session?.user?.id;
+  if (!session || !session?.user) {
+    redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
+  }
+  const userId = session.user?.id;
   const router = useRouter();
 
   const form = useForm<FormValues>({
@@ -190,7 +193,7 @@ function CreatePage() {
                 }}
               >
                 {/* <HiPhoto size={30} className="text-sky-500" /> */}
-                <button className="mr-6 mt-5 w-36 border border-black bg-theme-light-green py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none">
+                <button className="mr-6 mt-5 w-36 border border-black bg-theme-light-green-hover py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none">
                   上傳照片
                 </button>
               </CldUploadButton>
@@ -320,7 +323,7 @@ function CreatePage() {
         </div>
         <button
           type="submit"
-          className="focus:shadow-outline w-24 rounded-xl border border-black bg-theme-light-green py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
+          className="focus:shadow-outline w-24 rounded-xl border border-black bg-theme-light-green-hover py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
         >
           確定新增
         </button>
