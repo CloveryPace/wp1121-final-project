@@ -15,7 +15,7 @@
 4. Create `.env.local` and copy `.env.example` to `.env.local`. Add the following content:
 
    ```text
-    POSTGRES_URL=postgres://postgres:postgres@localhost:5432/leftover
+    POSTGRES_URL=
 
     PUSHER_ID=
     NEXT_PUBLIC_PUSHER_KEY=
@@ -30,9 +30,13 @@
     NEXT_PUBLIC_BASE_URL=http://localhost:3000
    ```
 
-5. If you wish to use docker to build a postgresql Start the database
+5. If you wish to use docker to build a postgresql server then use this command to start the database
    ```bash
    docker compose up -d
+   ```
+   After executing this, the `POSTGRES_URL` should be
+   ```
+   postgres://postgres:postgres@localhost:5432/leftover
    ```
 6. Run migrations
    ```bash
@@ -42,8 +46,8 @@
    ```bash
    yarn dev
    ```
-6. Open http://localhost:3000 in your browser
-7. Test account, no need to sign up, use this to login
+8. Open http://localhost:3000 in your browser
+9. Test account, no need to sign up, use this to login
    ```text
    帳號：test123
    密碼：test123
