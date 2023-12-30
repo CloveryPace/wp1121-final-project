@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
@@ -55,10 +57,11 @@ function DetailsPage() {
         console.log(JSON.parse(reserve_or_not.data));
         setReserve(reserve_or_not.data);
         console.log("是否要預定" + reserve);
-        if (reserve) {
+        if (!reserve) {
           const reserved_count = await axios.get(`/api/seeCount/${foodId}`);
           setPrevCount(reserved_count.data);
           setReserveCount(Number(prevCount));
+          console.log(prevCount);
         }
       } catch (error) {
         console.error("Error fetching food:", error);

@@ -27,8 +27,13 @@ export async function GET(
     }
     const userId = session.user.id;
 
-    const [haveorNot] = await db
-      .select()
+    const reserve_food = await db
+      .select({
+        userId: reservationTable.userId,
+        foodId: reservationTable.foodId,
+        count: reservationTable.count, //預定數量
+        createdAt: reservationTable.createdAt, //預定時間
+      })
       .from(reservationTable)
       .where(
         and(
@@ -38,9 +43,9 @@ export async function GET(
       )
       .execute();
 
-    console.log(haveorNot);
+    console.log("預定數量" + reserve_food[0].count);
 
-    return NextResponse.json(haveorNot.count, { status: 200 });
+    return NextResponse.json(reserve_food[0].count, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Internal Server Error" },
