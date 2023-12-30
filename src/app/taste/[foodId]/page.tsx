@@ -15,6 +15,8 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
@@ -24,6 +26,7 @@ interface FoodData {
   id: string;
   name: string;
   count: number;
+  image: string;
   event?: {
     userId: string;
     location: string;
@@ -132,7 +135,7 @@ function DetailsPage() {
       {/* flex justify-start space-x-24 */}
       <div className="grid grid-cols-2 items-center gap-24">
         <Image
-          src="/potato-salad.svg"
+          src={food?.image?.replace(/['"]+/g, "") || "/potato-salad.svg"}
           alt="food"
           width={0}
           height={0}
