@@ -33,7 +33,6 @@ function Navbar() {
   axios
     .get("/api/user")
     .then((res) => {
-      console.log(res.data);
       setUsername(res.data);
     })
     .catch((error) => {
@@ -46,7 +45,19 @@ function Navbar() {
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      router.push(`/taste/${searchQuery}`);
+      console.log("searchQuery:", searchQuery);
+      axios
+        .get(`/api/search/${searchQuery}`)
+        .then((res) => {
+          console.log(res.data);
+          router.push(`/taste/user/${res.data}`);
+          setTimeout(() => {
+            setSearchQuery("");
+          }, 0);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -76,7 +87,7 @@ function Navbar() {
             <ClickAwayListener onClickAway={() => setIsSearch(false)}>
               <Input
                 type="search"
-                placeholder="搜尋"
+                placeholder="搜尋使用者"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={handleKeyPress}
