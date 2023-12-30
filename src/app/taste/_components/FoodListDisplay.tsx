@@ -25,7 +25,10 @@ export async function FoodList() {
                 <Link href={`/taste/${item.food_id}`}>
                   <CardHeader className="max-h-32">
                     <Image
-                      src="/potato-salad.svg"
+                      src={
+                        item?.image?.replace(/['"]+/g, "") ||
+                        "/potato-salad.svg"
+                      }
                       alt="food"
                       width={0}
                       height={0}
@@ -70,7 +73,7 @@ export async function MyFoodList(userId: { userId: string }) {
                 <Link href={`/taste/${item.food_id}`}>
                   <CardHeader className="max-h-32">
                     <Image
-                      src="/potato-salad.svg"
+                      src={item.image || "/potato-salad.svg"}
                       alt="food"
                       width={0}
                       height={0}

@@ -1,6 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 
 // import { HiPhoto } from "react-icons/hi2";
@@ -57,25 +56,27 @@ function CreatePage() {
 
   const { errors } = formState;
 
-  const handleUploadImg = useCallback(async (error: any, result: any) => {
-    if (error) {
-      console.log(error);
-    }
-    const format = result?.info?.original_extension
-      ? result?.info?.format
-      : result?.info?.original_extension;
-    // if (format != "jpg" && format != "jpeg" && format != "png") {
-    //   alert("請上傳 jpg, jpeg, png 格式的檔案");
-    //   return;
-    // }
-    console.log(result?.info?.secure_url);
-    console.log(`${result?.info?.original_filename}.${format}`);
-    console.log(result);
-    //   setValue(`taste_info.${index}.taste_photo`, result.info.secure_url, {
-    //     shouldValidate: true,
-    //   });
-    return result?.info?.secure_url as string;
-  }, []);
+  // const handleUploadImg = async (error: any, result: any) => {
+  //   if (error) {
+  //     console.log(error);
+  //   }
+  //   const format = result?.info?.format || result?.info?.original_extension;
+  //   // if (format != "jpg" && format != "jpeg" && format != "png") {
+  //   //   alert("請上傳 jpg, jpeg, png 格式的檔案");
+  //   //   return;
+  //   // }
+  //   console.log(result?.info?.secure_url);
+  //   console.log(`${result?.info?.original_filename}.${format}`);
+  //   console.log(result);
+  //   //   setValue(`taste_info.${index}.taste_photo`, result.info.secure_url, {
+  //   //     shouldValidate: true,
+  //   //   });
+  //   return result?.info?.secure_url as string;
+  // };
+
+  // const handleUpload = (result: any) => {
+  //   console.log(result?.info?.secure_url);
+  // };
 
   const onSubmit = (data: FormValues) => {
     if (!userId) return;
@@ -163,17 +164,27 @@ function CreatePage() {
               <CldUploadButton
                 options={{
                   maxFiles: 1,
-                  resourceType: "image/jpeg, image/jpg, image/png",
+                  // resourceType: "image/jpeg, image/jpg, image/png",
                 }}
-                onUpload={async (error: any, result: any) => {
-                  const url = await handleUploadImg(error, result);
-                  setValue(`taste_info.${index}.taste_photo`, url, {
-                    shouldValidate: true,
-                  });
-                  console.log(result);
-                }}
+                // onUpload={async (error: any, result: any) => {
+                //   const url = await handleUploadImg(error, result);
+                //   console.log(result);
+                // }}
+                // onUpload={handleUpload}
                 uploadPreset={publicEnv.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET}
                 key={`taste-cld-upload-btn-${field.id}`}
+                onSuccess={(result: any) => {
+                  console.log(result);
+                  console.log(result.info.secure_url);
+                  console.log(result.info.secure_url.replace('"', ""));
+                  setValue(
+                    `taste_info.${index}.taste_photo`,
+                    result.info.secure_url,
+                    {
+                      shouldValidate: true,
+                    },
+                  );
+                }}
               >
                 {/* <HiPhoto size={30} className="text-sky-500" /> */}
                 <button className="mr-6 mt-5 w-36 border border-black bg-theme-light-green py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none">

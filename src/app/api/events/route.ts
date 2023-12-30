@@ -45,7 +45,7 @@ export async function POST(request: Request) {
             eventId: newEventId,
             name: taste_info[i].taste_name,
             count: taste_info[i].taste_count,
-            image: JSON.stringify(taste_info[i].taste_photo["0"]),
+            image: JSON.stringify(taste_info[i].taste_photo),
           })
           .returning();
         return newFood.displayId;
