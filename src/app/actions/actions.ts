@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { db } from "@/db";
 import { eventsTable, foodTable, reservationTable } from "@/db/schema";
-// import { pusherServer } from "@/lib/pusher/server";
 
 // 新增event
 export const CreateEvent = async (
