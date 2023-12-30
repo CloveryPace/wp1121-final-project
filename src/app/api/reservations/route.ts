@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 import { eq } from "drizzle-orm";
+import Pusher from "pusher";
 
 import { db } from "@/db";
 import { foodTable, reservationTable } from "@/db/schema";
@@ -62,7 +64,6 @@ export async function POST(request: Request) {
       console.log("成功刪除預定");
     }
 
-    /*
     // Trigger pusher event
     const pusher = new Pusher({
       appId: privateEnv.PUSHER_ID,
@@ -73,15 +74,8 @@ export async function POST(request: Request) {
     });
 
     // Private channels are in the format: private-...
-    await pusher.trigger(`private-${updatedDoc.displayId}`, "doc:update", {
-      senderId: userId,
-      document: {
-        id: updatedDoc.displayId,
-        title: updatedDoc.title,
-        content: updatedDoc.content,
-      },
-    });
-    */
+    await pusher.trigger(foodId, "foodcount:update", reservecount);
+    revalidatePath(`/taste/${foodId}`);
 
     console.log("成功");
     return new NextResponse("預定route", { status: 200 });

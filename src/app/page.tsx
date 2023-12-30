@@ -90,7 +90,7 @@ export default function Login() {
             {isSignUp ? (
               <div>
                 <button
-                  className="focus:shadow-outline w-full rounded rounded-xl border border-black bg-theme-light-green px-4 py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
+                  className="focus:shadow-outline w-full rounded-xl border border-black bg-theme-light-green px-4 py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
                   type="button"
                   onClick={handleSubmit}
                 >
@@ -108,7 +108,7 @@ export default function Login() {
             ) : (
               <div>
                 <button
-                  className="focus:shadow-outline w-full rounded rounded-xl border border-black bg-theme-light-green px-4 py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
+                  className="focus:shadow-outline w-full rounded-xl border border-black bg-theme-light-green px-4 py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
                   type="button"
                   onClick={handleSubmit}
                 >
