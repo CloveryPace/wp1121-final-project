@@ -3,7 +3,6 @@
 
 import { useState, useEffect } from "react";
 
-import { Oswald } from "next/font/google";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 
@@ -12,15 +11,6 @@ import axios from "axios";
 import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-const oswald = Oswald({
-  weight: "300",
-  subsets: ["latin"],
-});
 
 interface FoodData {
   id: string;
@@ -114,17 +104,13 @@ function DetailsPage() {
     <div className="mx-4 flex h-screen w-full flex-col space-y-6 px-24 py-6">
       <div className="mt-24 flex h-10 items-end justify-start space-x-6">
         <div className="select-none text-3xl">{food?.name}</div>
-        <div className={oswald.className}>
-          {/* 從 foodTable 連到 eventTable 再連到 user */}
-          <div
-            className="mb-0.5 cursor-pointer select-none text-lg"
-            onClick={() => handleClick()}
-          >
-            @{creatorname}
-          </div>
+        <div
+          className="mb-0.5 cursor-pointer select-none text-xl"
+          onClick={() => handleClick()}
+        >
+          @{creatorname}
         </div>
       </div>
-      {/* flex justify-start space-x-24 */}
       <div className="grid grid-cols-2 items-center gap-24">
         <Image
           src="/potato-salad.svg"
