@@ -12,6 +12,12 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 interface FoodData {
   id: string;
   name: string;
@@ -150,7 +156,7 @@ function DetailsPage() {
           />
           {!reserve ? (
             <button
-              className="focus:shadow-outline min-w-[100px] rounded rounded-xl bg-gray-300 bg-opacity-80 px-4 py-2 text-xl font-semibold text-gray-500 hover:bg-opacity-70 focus:outline-none"
+              className="focus:shadow-outline min-w-[100px] rounded-xl bg-gray-300 bg-opacity-80 px-4 py-2 text-xl font-semibold text-gray-500 hover:bg-opacity-70 focus:outline-none"
               type="button"
               onClick={handleResClick}
             >
@@ -158,7 +164,7 @@ function DetailsPage() {
             </button>
           ) : (
             <button
-              className="focus:shadow-outline min-w-[100px] rounded rounded-xl bg-lime-700 bg-opacity-80 px-4 py-2 text-xl font-semibold text-white hover:bg-opacity-70 focus:outline-none"
+              className="focus:shadow-outline min-w-[100px] rounded-xl bg-lime-700 bg-opacity-80 px-4 py-2 text-xl font-semibold text-white hover:bg-opacity-70 focus:outline-none"
               type="button"
               onClick={handleResClick}
             >
