@@ -3,29 +3,15 @@
 
 import { useState, useEffect } from "react";
 
+import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, redirect } from "next/navigation";
 
 import axios from "axios";
 
 import { Input } from "@/components/ui/input";
+import { publicEnv } from "@/lib/env/public";
 import { pusherClient } from "@/lib/pusher/client";
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -42,6 +28,10 @@ interface FoodData {
 }
 
 function DetailsPage() {
+  const { data: session } = useSession();
+  if (!session || !session?.user) {
+    redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
+  }
   const router = useRouter();
   const [reserve, setReserve] = useState<boolean>(false);
   const [prevCount, setPrevCount] = useState<number | undefined>(0);
