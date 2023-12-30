@@ -49,6 +49,7 @@ function Navbar() {
         <div
           className="cursor-pointer select-none px-10 text-4xl"
           onClick={() => {
+            router.refresh();
             router.push("/taste");
           }}
         >
