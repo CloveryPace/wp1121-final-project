@@ -58,7 +58,7 @@ export async function FoodList({ eng, chi }: CategoryProps) {
   );
 }
 
-export async function MyFoodList(userId: { userId: string }) {
+export async function UserFoodList(userId: { userId: string }) {
   const food = await getFoodByUserId(userId);
   const username = await getUsername(userId);
   return (
