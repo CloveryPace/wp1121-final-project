@@ -13,6 +13,8 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
@@ -56,6 +58,7 @@ function DetailsPage() {
           const reserved_count = await axios.get(`/api/seeCount/${foodId}`);
           setPrevCount(reserved_count.data);
           setReserveCount(Number(prevCount));
+          console.log(prevCount);
         }
       } catch (error) {
         console.error("Error fetching food:", error);
