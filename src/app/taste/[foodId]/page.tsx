@@ -12,8 +12,6 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 interface FoodData {
   id: string;
   name: string;

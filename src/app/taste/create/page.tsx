@@ -265,7 +265,7 @@ function CreatePage() {
         </div>
         <button
           type="submit"
-          className="focus:shadow-outline w-24 rounded rounded-xl border border-black bg-theme-light-green py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
+          className="focus:shadow-outline w-24 rounded rounded-xl border border-black bg-theme-light-green-hover py-2 text-base font-semibold text-black hover:bg-theme-light-green-hover focus:outline-none"
         >
           確定新增
         </button>
