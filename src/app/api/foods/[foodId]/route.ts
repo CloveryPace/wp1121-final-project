@@ -2,11 +2,11 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { and, eq } from "drizzle-orm";
 
-// import Pusher from "pusher";
 import { db } from "@/db";
 import { foodTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
+// 根據eventId取得特定event資料
 export async function GET(
   req: NextRequest,
   {
@@ -22,8 +22,9 @@ export async function GET(
   if (!session || !session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
-  // const userId = session.user.id;
 
+  // 取得event資料
+  // 利用query同時取得event creator的資料
   const dbFood = await db.query.foodTable.findFirst({
     where: and(eq(foodTable.displayId, params.foodId)),
     with: {

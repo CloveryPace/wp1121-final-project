@@ -15,9 +15,6 @@ export const {
     // session內容在nextauth.d.ts定義
     // 從session取得user資料以供前端使用
     async session({ session, token }) {
-      console.log("---------------------------------------------");
-      console.log("session", session);
-      console.log("token", token);
       // 這邊的token還是default的內容，不知道有沒有辦法extend
       const name = token.name || session?.user?.username;
       if (!name) {
