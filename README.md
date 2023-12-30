@@ -67,8 +67,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 # 組員分工
 
-```text
 李宇軒：後端，DB schema、auth、圖片儲存
 吳郁心：後端，API、pusher、少數前端（預訂功能）
 劉倍嘉：前端、少數API（取得使用者名稱，以及根據使用者、餐點或餐點類型取得餐點資訊）
-```
