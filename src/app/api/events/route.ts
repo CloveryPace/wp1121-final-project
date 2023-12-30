@@ -52,7 +52,6 @@ export async function POST(request: Request) {
       });
     }
 
-    /*
     // Trigger pusher event
     const pusher = new Pusher({
       appId: privateEnv.PUSHER_ID,
@@ -63,15 +62,7 @@ export async function POST(request: Request) {
     });
 
     // Private channels are in the format: private-...
-    await pusher.trigger(`private-${updatedDoc.displayId}`, "doc:update", {
-      senderId: userId,
-      document: {
-        id: updatedDoc.displayId,
-        title: updatedDoc.title,
-        content: updatedDoc.content,
-      },
-    });
-    */
+    await pusher.trigger("event", "food:update", newEventId);
 
     return new NextResponse("過去了", { status: 200 });
   } catch (error: any) {

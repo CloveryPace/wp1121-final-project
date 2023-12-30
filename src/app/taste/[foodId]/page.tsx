@@ -10,6 +10,9 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 
 import { Input } from "@/components/ui/input";
+import { pusherClient } from "@/lib/pusher/client";
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -44,19 +47,26 @@ function DetailsPage() {
   const [food, setFood] = useState<FoodData | null>(null);
   const { foodId } = useParams();
 
+  // pusher
+  const [dbcount, setDbCount] = useState<number | undefined>(0);
+  const [count, setCount] = useState<number | undefined>(0);
+
+  // update food information
   useEffect(() => {
     const fetchFood = async () => {
       try {
+        // 取得食物資訊
         const response = await axios.get(`/api/foods/${foodId}`);
         setFood(response.data);
         setFoodCount(food?.count);
         console.log("食物剩餘數量" + foodCount);
-        // 查看user是否已經預定過
-        // 若預定過了就disable按鈕
+
+        // 查看user是否已經預定過，若預定過了就disable按鈕
         const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
         console.log(JSON.parse(reserve_or_not.data));
         setReserve(reserve_or_not.data);
         console.log("是否要預定" + reserve);
+
         if (!reserve) {
           const reserved_count = await axios.get(`/api/seeCount/${foodId}`);
           setPrevCount(reserved_count.data);
@@ -69,6 +79,25 @@ function DetailsPage() {
     };
     fetchFood();
   }, [foodId, food?.count, foodCount, reserve, setReserve, prevCount]);
+
+  // Subscribe to pusher events
+  useEffect(() => {
+    const channelName = foodId[0];
+    try {
+      const channel = pusherClient.subscribe(channelName);
+      channel.bind("foodcount:update", (reservecount: number) => {
+        setCount(reservecount);
+        setDbCount(reservecount);
+        router.refresh();
+      });
+    } catch (error) {
+      console.log("pusher error");
+    }
+    // Unsubscribe from pusher events when the component unmounts
+    return () => {
+      pusherClient.unsubscribe(channelName);
+    };
+  });
 
   axios
     .get(`/api/user/${food?.event?.userId}`)
