@@ -2,15 +2,9 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { and, eq } from "drizzle-orm";
 
-// import Pusher from "pusher";
 import { db } from "@/db";
 import { eventsTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
-
-// import { privateEnv } from "@/lib/env/private";
-// import { publicEnv } from "@/lib/env/public";
-
-// import { updateDocSchema } from "@/validators/updateDocument";
 
 // 根據eventId取得特定event資料
 export async function GET(

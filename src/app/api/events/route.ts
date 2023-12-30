@@ -73,7 +73,6 @@ export async function POST(request: Request) {
     });
     */
 
-    console.log("成功");
     return new NextResponse("過去了", { status: 200 });
   } catch (error: any) {
     console.log(error, "ERROR_MESSAGES in events/[eventId]/route");

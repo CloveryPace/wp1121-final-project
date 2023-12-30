@@ -113,6 +113,7 @@ export const reservationTable = pgTable(
     // displayIdIndex: index("display_id_index").on(table.displayId),
     userIdIndex: index("reservation_user_id_index").on(table.userId),
     foodIdIndex: index("food_id_index").on(table.foodId),
+    uniqCombination: unique().on(table.userId, table.foodId),
   }),
 );
 
