@@ -9,6 +9,23 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 
 import { Input } from "@/components/ui/input";
+import { pusherClient } from "@/lib/pusher/client";
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
@@ -16,6 +33,7 @@ interface FoodData {
   id: string;
   name: string;
   count: number;
+  image: string;
   event?: {
     userId: string;
     location: string;
@@ -33,20 +51,27 @@ function DetailsPage() {
   const [food, setFood] = useState<FoodData | null>(null);
   const { foodId } = useParams();
 
+  // pusher
+  const [dbcount, setDbCount] = useState<number | undefined>(0);
+  const [count, setCount] = useState<number | undefined>(0);
+
+  // update food information
   useEffect(() => {
     const fetchFood = async () => {
       try {
+        // 取得食物資訊
         const response = await axios.get(`/api/foods/${foodId}`);
         setFood(response.data);
         setFoodCount(food?.count);
         console.log("食物剩餘數量" + foodCount);
-        // 查看user是否已經預訂過
-        // 若預訂過了就disable按鈕
+
+        // 查看user是否已經預定過，若預定過了就disable按鈕
         const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
         console.log(JSON.parse(reserve_or_not.data));
         setReserve(reserve_or_not.data);
-        console.log("是否要預訂" + reserve);
-        if (reserve) {
+        console.log("是否要預定" + reserve);
+
+        if (!reserve) {
           const reserved_count = await axios.get(`/api/seeCount/${foodId}`);
           setPrevCount(reserved_count.data);
           setReserveCount(Number(prevCount));
@@ -58,6 +83,25 @@ function DetailsPage() {
     };
     fetchFood();
   }, [foodId, food?.count, foodCount, reserve, setReserve, prevCount]);
+
+  // Subscribe to pusher events
+  useEffect(() => {
+    const channelName = foodId[0];
+    try {
+      const channel = pusherClient.subscribe(channelName);
+      channel.bind("foodcount:update", (reservecount: number) => {
+        setCount(reservecount);
+        setDbCount(reservecount);
+        router.refresh();
+      });
+    } catch (error) {
+      console.log("pusher error");
+    }
+    // Unsubscribe from pusher events when the component unmounts
+    return () => {
+      pusherClient.unsubscribe(channelName);
+    };
+  });
 
   axios
     .get(`/api/user/${food?.event?.userId}`)
@@ -108,8 +152,8 @@ function DetailsPage() {
   };
 
   return (
-    <div className="flex h-screen w-full flex-col space-y-6 px-24 py-6">
-      <div className="mt-24 flex h-10 items-end justify-start space-x-6">
+    <div className="no-scrollbar my-32 h-screen w-full space-y-12 overflow-y-scroll px-24 pb-32">
+      <div className="flex h-10 items-end justify-start space-x-6">
         <div className="select-none text-3xl">{food?.name}</div>
         <div
           className="mb-0.5 cursor-pointer select-none text-lg"
@@ -119,16 +163,18 @@ function DetailsPage() {
         </div>
       </div>
       {/* flex justify-start space-x-24 */}
-      <div className="grid grid-cols-2 items-center gap-24">
-        <Image
-          src="/potato-salad.svg"
-          alt="food"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{ width: "100%", height: "auto" }}
-          priority
-        />
+      <div className="grid h-screen grid-cols-2 items-center gap-24">
+        <div className="no-scrollbar h-screen overflow-y-scroll">
+          <Image
+            src={food?.image?.replace(/['"]+/g, "") || "/potato-salad.svg"}
+            alt="food"
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{ width: "100%", height: "auto" }}
+            priority
+          />
+        </div>
         <div className="flex flex-col">
           <hr className="mb-8 h-0.5 border-0 bg-gray-300"></hr>
           <div className="flex select-none flex-col space-y-6">
@@ -149,7 +195,7 @@ function DetailsPage() {
           />
           {!reserve ? (
             <button
-              className="focus:shadow-outline min-w-[100px] rounded rounded-xl bg-gray-300 bg-opacity-80 px-4 py-2 text-xl font-semibold text-gray-500 hover:bg-opacity-70 focus:outline-none"
+              className="focus:shadow-outline min-w-[100px] rounded-xl bg-gray-300 bg-opacity-80 px-4 py-2 text-xl font-semibold text-gray-500 hover:bg-opacity-70 focus:outline-none"
               type="button"
               onClick={handleResClick}
             >
@@ -157,7 +203,7 @@ function DetailsPage() {
             </button>
           ) : (
             <button
-              className="focus:shadow-outline min-w-[100px] rounded rounded-xl bg-lime-700 bg-opacity-80 px-4 py-2 text-xl font-semibold text-white hover:bg-opacity-70 focus:outline-none"
+              className="focus:shadow-outline min-w-[100px] rounded-xl bg-lime-700 bg-opacity-80 px-4 py-2 text-xl font-semibold text-white hover:bg-opacity-70 focus:outline-none"
               type="button"
               onClick={handleResClick}
             >
