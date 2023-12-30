@@ -107,20 +107,21 @@ export async function UserFoodList(userId: { userId: string }) {
 
 export async function ReservationList() {
   const food = await getReservations();
-  console.log("預定食物");
+  console.log("預訂食物");
   console.log(food);
   return (
     <div className="mx-12 flex flex-col space-y-4">
-      <div className="no-scrollbar flex space-x-4 overflow-x-scroll">
+      <p className="select-none text-2xl">我的訂單</p>
+      <div className="grid grid-cols-5 gap-x-4 gap-y-8">
         {food?.map((item: any, i: any) => {
           if (item.count > 0) {
             return (
               <Card
-                className="h-64 w-48 shrink-0 cursor-pointer select-none"
+                className="h-72 w-56 shrink-0 cursor-pointer select-none"
                 key={i}
               >
                 <Link href={`/taste/${item.foodId}`}>
-                  <CardHeader className="max-h-32">
+                  <CardHeader className="max-h-36 min-h-28">
                     <Image
                       src="/potato-salad.svg"
                       alt="food"
@@ -137,7 +138,8 @@ export async function ReservationList() {
                   </CardHeader>
                   <CardContent className="no-scrollbar h-2/5 overflow-y-scroll">
                     <CardTitle>{item.name}</CardTitle>
-                    <div>預定數量：{item.count}</div>
+                    <div>預訂數量：{item.count}</div>
+                    <div>取餐時間：{item.time}</div>
                     <div>取餐地點：{item.location}</div>
                   </CardContent>
                 </Link>

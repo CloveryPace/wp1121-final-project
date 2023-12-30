@@ -24,6 +24,7 @@ const getReservations = async () => {
         createdAt: reservationTable.createdAt, //預定時間
         name: foodTable.name,
         image: foodTable.image,
+        time: eventsTable.latest_time,
         location: eventsTable.location,
       })
       .from(reservationTable)

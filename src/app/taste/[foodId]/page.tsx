@@ -13,8 +13,6 @@ import { Input } from "@/components/ui/input";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 const oswald = Oswald({
   weight: "300",
   subsets: ["latin"],
@@ -34,7 +32,6 @@ interface FoodData {
 function DetailsPage() {
   const router = useRouter();
   const [reserve, setReserve] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>("");
   const [prevCount, setPrevCount] = useState<number | undefined>(0);
   const [foodCount, setFoodCount] = useState<number | undefined>(0);
   const [reservecount, setReserveCount] = useState<number>(0);
@@ -54,7 +51,7 @@ function DetailsPage() {
         const reserve_or_not = await axios.get(`/api/userAndFood/${foodId}`);
         console.log(JSON.parse(reserve_or_not.data));
         setReserve(reserve_or_not.data);
-        console.log("是否要預定" + reserve);
+        console.log("是否要預訂" + reserve);
         if (reserve) {
           const reserved_count = await axios.get(`/api/seeCount/${foodId}`);
           setPrevCount(reserved_count.data);
@@ -116,11 +113,10 @@ function DetailsPage() {
   };
 
   return (
-    <div className="mx-4 flex h-screen w-full flex-col space-y-6 px-24 py-6">
+    <div className="flex h-screen w-full flex-col space-y-6 px-24 py-6">
       <div className="mt-24 flex h-10 items-end justify-start space-x-6">
         <div className="select-none text-3xl">{food?.name}</div>
         <div className={oswald.className}>
-          {/* 從 foodTable 連到 eventTable 再連到 user */}
           <div
             className="mb-0.5 cursor-pointer select-none text-lg"
             onClick={() => handleClick()}
@@ -147,10 +143,10 @@ function DetailsPage() {
             <div className="text-xl">取餐時間：{food?.event?.latest_time}</div>
             <div className="text-xl">取餐地點：{food?.event?.location}</div>
           </div>
-          <hr className="my-6 mb-16 h-0.5 border-0 bg-gray-300"></hr>
+          <hr className="my-6 mb-8 h-0.5 border-0 bg-gray-300"></hr>
           <Input
             type="number"
-            placeholder="預定數量"
+            placeholder="預訂數量"
             className="my-3 flex h-10 w-full rounded-md border border-black text-base"
             onChange={(e) => {
               setReserveCount(Number(e.target.value));
@@ -164,7 +160,7 @@ function DetailsPage() {
               type="button"
               onClick={handleResClick}
             >
-              已預訂。再按一次以取消預定
+              已預訂。再按一次以取消預訂
             </button>
           ) : (
             <button
