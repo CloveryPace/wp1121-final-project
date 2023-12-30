@@ -16,19 +16,6 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
@@ -72,3 +59,16 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
    yarn dev
    ```
 6. Open http://localhost:3000 in your browser
+7. Test account, no need to sign up, use this to login
+   ```text
+   帳號：test123
+   密碼：test123
+   ```
+
+# 組員分工
+
+```text
+李宇軒：後端，DB schema、auth、圖片儲存
+吳郁心：後端，API、pusher、少數前端（預訂功能）
+劉倍嘉：前端、少數API（取得使用者名稱，以及根據使用者、餐點或餐點類型取得餐點資訊）
+```
