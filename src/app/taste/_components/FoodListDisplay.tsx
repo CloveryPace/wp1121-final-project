@@ -79,7 +79,10 @@ export async function UserFoodList(userId: { userId: string }) {
                 <Link href={`/taste/${item.food_id}`}>
                   <CardHeader className="max-h-36 min-h-28">
                     <Image
-                      src={item.image || "/potato-salad.svg"}
+                      src={
+                        item?.image?.replace(/['"]+/g, "") ||
+                        "/potato-salad.svg"
+                      }
                       alt="food"
                       width={0}
                       height={0}
