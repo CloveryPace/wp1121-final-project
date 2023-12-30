@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+// import { useHistory } from 'react-router-dom';
 import { Oswald } from "next/font/google";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -26,7 +27,9 @@ const oswald = Oswald({
 
 function Navbar() {
   const router = useRouter();
+  // const history = useHistory();
   const [isSearch, setIsSearch] = useState<boolean>(false);
+  // const [searchQuery, setSearchQuery] = useState('');
   const [username, setUsername] = useState<string>("");
 
   axios
@@ -42,6 +45,13 @@ function Navbar() {
   const handleClick = () => {
     router.push("/taste/create");
   };
+
+  // const handleKeyPress = (event) => {
+  //   if (event.key === 'Enter') {
+  //     // Navigate to a new page using the search query
+  //     history.push(`/search-results?query=${searchQuery}`);
+  //   }
+  // };
 
   return (
     <nav className="fixed flex w-full flex-wrap justify-between border-r bg-theme-green bg-opacity-30 py-6">
@@ -70,6 +80,7 @@ function Navbar() {
               <Input
                 type="search"
                 placeholder="搜尋"
+                // value={searchQuery}
                 className="h-8 rounded-md border border-black text-base"
               />
             </ClickAwayListener>

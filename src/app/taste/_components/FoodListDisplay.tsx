@@ -39,7 +39,6 @@ export async function FoodList({ eng, chi }: CategoryProps) {
                         borderRadius: "12px 12px 0 0",
                       }}
                       priority
-                      // className="my-auto"
                     />
                   </CardHeader>
                   <CardContent className="no-scrollbar h-2/5 overflow-y-scroll">

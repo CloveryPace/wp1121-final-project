@@ -13,8 +13,6 @@ async function TastePage() {
     redirect(publicEnv.NEXT_PUBLIC_BASE_URL);
   }
 
-  // const categories = ["臺式", "中式", "西式", "日式", "韓式", "早餐", "飲料", "甜點"];
-  // const categories = ["taiwanese", "chinese", "western", "japanese", "korean", "breakfast", "drinks", "desserts"];
   const categories = {
     taiwanese: "臺式",
     chinese: "中式",

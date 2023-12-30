@@ -7,12 +7,6 @@ import { db } from "@/db";
 import { foodTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
-// import { privateEnv } from "@/lib/env/private";
-// import { publicEnv } from "@/lib/env/public";
-
-// import { updateDocSchema } from "@/validators/updateDocument";
-
-// 根據eventId取得特定event資料
 export async function GET(
   req: NextRequest,
   {
@@ -30,9 +24,6 @@ export async function GET(
   }
   // const userId = session.user.id;
 
-  // 取得event資料
-  // 利用query同時取得event creator的資料
-  // Get the document
   const dbFood = await db.query.foodTable.findFirst({
     where: and(eq(foodTable.displayId, params.foodId)),
     with: {
